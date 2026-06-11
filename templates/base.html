@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{%block title %} Colage Canteen {% endblock %}</title>
+</head>
+<body>
+    <nav>
+        <a href="{{url_for('home')}}">Home</a>
+        <a href="{{url_for('about')}}">about</a>
+    </nav>
+    <hr>
+     {%block content %}{% endblock %}
+    </hr>
+   <small> College Canteen</small>
+</body>
+</html>

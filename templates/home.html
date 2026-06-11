@@ -1,0 +1,12 @@
+{%extends "base.html"%}
+{% block title %} Home {%endblock%}
+{%block content%}
+<h1>Welcome to collage canteen</h1></p>
+<p> Welcome to our college canteen! We offer a variety of delicious meals and snacks for all your needs.</p>
+<p>Total items: {{Menu|length}}</p>
+<ui>    
+    {% for item in Menu %}
+        <li>{{item.name}}</li> -<li>{{item.price}}</li>
+        {%endfor%}
+</ui>
+{%endblock%}
