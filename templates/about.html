@@ -1,6 +1,20 @@
 {% extends "base.html" %}
 {% block title %} About our canteen {% endblock %}
 {% block content %}
-<h1>About canteen </h1>
-<P> <a href="{{url_for('home')}}">Back to home page</a> </p>
+<div class="d-flex justify-content-center align-item-center" style="height: 200px;">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-body">
+                <h1 class="card-text">This project is simple flask demo application</h1>
+                <hr>
+                <p>Welcome to canteen, Sorry for any single mistake made our staff !</p>
+                <p>We're very thackfull you visited our canteen </p>
+                <p>Tihs is our Mobile number : 123456789</p>
+                <p>For any enquiry you must visit our email</p>
+                <p>Email id : canteen@gmail.com</p>
+                <P><a href="{{url_for('home')}}" class="btn btn-primary">Back to home </a></p>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

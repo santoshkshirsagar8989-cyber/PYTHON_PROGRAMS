@@ -2,20 +2,23 @@
 # Flask concept 
 #   Browser(crome)request-->Flask-->python code
 #   Browser(crome)<--response<--Flask<--python code
+from tkinter import Menu
+
 from flask import Flask, render_template
 
 app = Flask(__name__)
 
 Menus = [
-    {"item":"Pizza","price":100},
-    {"item":"Burger","price":50},
-    {"item":"Sandwich","price":75},
-    {"item":"Pasta","price":120}
+    {"name":"pizza","price":100},
+    {"name":"Burger","price":50},
+    {"name":"Sandwich","price":75},
+    {"name":"Pasta","price":120}
 ]
+
 
 @app.route('/')
 def home():
-    return render_template('home.html', Menu=Menus)
+    return render_template('home.html',Menus=Menus)
 
 @app.route('/base')
 def base():

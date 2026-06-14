@@ -1,12 +1,29 @@
 {%extends "base.html"%}
 {% block title %} Home {%endblock%}
 {%block content%}
-<h1>Welcome to collage canteen</h1></p>
+
+<div class =d-flex justify-content-between align-items-center mb-4>
+    <h1>Welcome to collage canteen</h1>
+    <a href="{{url_for('about')}}" class="btn btn-primary">About us</a>
+</div>
 <p> Welcome to our college canteen! We offer a variety of delicious meals and snacks for all your needs.</p>
-<p>Total items: {{Menu|length}}</p>
-<ui>    
-    {% for item in Menu %}
-        <li>{{item.name}}</li> -<li>{{item.price}}</li>
+<span class="badge bg-secondary fs-6">
+<p>Total items: {{Menus|length}} </p>
+</span>
+<hr>
+<ui> 
+    <table class ="table table-striped table-hover table-success" border="2">
+    <thread class="table-dark"></thread> 
+    <tr>
+        <th>item name</th>
+        <th>price</th>
+    </tr> 
+        {% for item in Menus %}
+            <tr>
+                <td class="fw-bold">{{item.name}}</td>
+                <td>{{item.price}}</td>
+            </tr>
         {%endfor%}
+    </table>  
 </ui>
 {%endblock%}
