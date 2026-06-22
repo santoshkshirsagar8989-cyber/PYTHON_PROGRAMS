@@ -1,25 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{%block title %} Colage Canteen {% endblock %}</title> <align="left">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar {
+            min-height: 60px;
+        }
+        :root {
+            --brand: #1e3a5f;
+        }
+        .navbar-brand-custom { background-color: var(--brand); }
+        .btn-brand {
+            background-color: var(--brand);
+            color: white;
+            border: none;
+        }
+        .btn-brand:hover { background-color: #162d4a; color: white; }
+        .hero-section {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d6a9f 100%);
+            color: white;
+            border-radius: 12px;
+        }
+        .nav-link {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .stat-card {
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.2s;
+        }
+        .stat-card:hover { transform: translateY(-3px); }
+        .student-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .student-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+    </style>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> #navbar  -expand-lg tis is respsive break point navbar-dark bg-dark is for dark theme
-        <div class="container"> #this means navbar content will be centered in the page
-            <a class="navbar-brand" href="{{url_for('home')}}">College Canteen</a>
-            <div class="navbar-nav ms-auto" >#  we save our links in navbar-nav and ms-auto is for right align
-                <a class="nav-link" href="{{url_for('home')}}">Home</a>
-                <a class="nav-link" href="{{url_for('about')}}">About</a>
+<body class="bg-ligt">
+     <nav class="navbar navbar-expand navbar-dark shadow-sm"
+         style="background-color: #3dac99b4;">
+        <div class="container justify-content-center"> 
+            <a class="navbar-brand fw-bold fs-5 me-5" href="{{url_for('home')}}"> 🍕 College Canteen</a>
+            <div class="navbar-nav ms-auto" >
+                <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('menu')}}"> 🍽 menu</a>
+                <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('add_item')}}"> 🍟 Add Item</a>
+                <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('order')}}"> 🍔 order</a>
+                <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('about')}}">📍 About</a>
             </div>
         </div>
     </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert dismissible fade show " role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
     <div class="container mt-4">
-        
+    {% block content %}
+     {% endblock %} 
     </div>
 </body>
-    <hr>
-     {%block content %}{% endblock %}
-    </hr>
+     <footer style="background-color: #1e3a5f;" class="text-white text-center py-3 mt-5">
+        <small>
+            🎓 College Canteen &nbsp;|&nbsp;
+            Built with Python + Flask + Bootstrap &nbsp;|&nbsp;
+            Projected by Santosh Kshirsagar
+        </small>
+    </footer>
 </body>
 </html>

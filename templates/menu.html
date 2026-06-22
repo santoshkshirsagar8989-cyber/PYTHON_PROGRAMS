@@ -1,0 +1,33 @@
+{% extends"base.html" %}
+{% block title %}
+ menu
+ {%endblock%}
+{% block content %}
+<div class="card shadow text-center ">
+    <h1> This is our delicious item </h1>
+    <hr>
+    <ui> 
+        <p class="fs-2 fw-bold fst-italic">We surves all types of Food like Werston,south-indian,north-indian Food Items</p></div>
+        <span class="badge bg-danger fs-6">
+            <p>Total items: {{menus|length}} </p>
+        </span>        
+        <div class="card shadow">
+            <table class ="table table- table-hover table-info"> 
+                    <tr >
+                        <th scope="col">#</th>
+                        <th>item name</th>
+                        <th>price</th>
+                    </tr> 
+                    {% for item in menus %}
+                    <tr>
+                        <th scope="row">{{loop.index}}</th>
+                        <td class="fw-bold">{{item.name}}</td>
+                        <td>{{item.price}}</td>
+                    </tr>
+                    {%endfor%}
+            </table>
+            <a href="{{url_for('order')}}" class="btn btn-danger">order</a> 
+        </div>   
+    </ui>
+</div>
+{% endblock %}
