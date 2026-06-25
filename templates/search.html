@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold mb-1">Search result</h2>
+  <a href="{{url_for('menu')}}" class="btn btn-secondary btn-sm"><-- menus</a>
+</div>
+{% if query %}
+<div class="alert alert-info justify-content-between align-items-center">
+  <span>
+    <strong>{{query}}</strong>
+    <strong>{{ menuss|length  }} result {{ 's' if menus|length != 1 }}</strong>
+  </span>
+  <a href="{{url_for('search')}}" class="btn btn-secondary btn-sm">Clear</a>
+</div>
+{% endif %}
+{% if menus %}
+<div class="card shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead class="table-secondary">
+        <tr>
+          <th>#</th>
+          <th>Item name</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in menus %}
+        <tr class="align-middle">
+          <td>{{ loop.index }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% else %}
+<p>No results found.</p>
+{% endif %}
+{% endblock %}

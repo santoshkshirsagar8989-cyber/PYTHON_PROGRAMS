@@ -90,6 +90,24 @@ def add_item():
     
     return render_template('add_item.html')
 
+
+
+@app.route("/search")
+def search():
+    q=request.args.get('q','')
+    conn = get_db_menus()
+
+    if q:
+        menu = conn.execute('''SELECT * FROM menus WHERE 
+                                name LIKE ?
+                                OR price LIKE ?''',
+                                (f'%{q}%', f'%{q}%')).fetchall()
+    else:
+        menu = conn.execute('SELECT * FROM menus ORDER BY price DESC').fetchall()
+    conn.close()
+    return render_template("search.html", menus=menu, query=q)
+    
+
 if __name__ == "__main__":
     init_db_menus()
     init_db_orders()

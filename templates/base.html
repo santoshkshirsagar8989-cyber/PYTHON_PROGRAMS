@@ -56,6 +56,11 @@
                 <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('add_item')}}"> 🍟 Add Item</a>
                 <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('order')}}"> 🍔 order</a>
                 <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('about')}}">📍 About</a>
+                <form class="d-flex" action="{{url_for('search')}}" method="GET">
+                    <input class="from-control me-2" type="search" placeholder="search" name="q">
+                    <button class="btn btn-outline-dark" type="submit">search</button>
+                </form>
+
             </div>
         </div>
     </nav>
@@ -67,6 +72,7 @@
             {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
+            
         {% endfor %}
     {% endif %}
     {% endwith %}
@@ -75,6 +81,7 @@
      {% endblock %} 
     </div>
 </body>
+
      <footer style="background-color: #1e3a5f;" class="text-white text-center py-3 mt-5">
         <small>
             🎓 College Canteen &nbsp;|&nbsp;
