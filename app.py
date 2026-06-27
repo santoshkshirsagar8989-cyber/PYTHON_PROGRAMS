@@ -90,8 +90,6 @@ def add_item():
     
     return render_template('add_item.html')
 
-
-
 @app.route("/search")
 def search():
     q=request.args.get('q','')

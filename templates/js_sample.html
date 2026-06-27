@@ -1,0 +1,63 @@
+><!DOCTYPE html>
+<html>
+    <head>
+        <title> Live Search </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body class="bg-light">
+        <div class="container mt-4"></div>
+            <h2 class ="fw-bold mb-4">Student Live Search Demo </h2>
+
+            <!-- Search input -->
+            <input type="text"
+            id ="searchInput"
+            class="form-control "
+            placeholder = "Type to search...">
+
+            <!-- Table -->
+            <table class ="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>price</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tableBody">
+                    <tr data-name ="pizza">
+                        <!-- data-name - JS information  -->
+                        <td>pizza</td>
+                        <td>200</td>
+                    </tr>
+                    <tr data-name ="pasta">
+                        <!-- data-name - JS information  -->
+                        <td>pasta</td>
+                        <td>100</td>
+                    </tr>
+                    <tr data-name ="misal">
+                        <!-- data-name - JS information  -->
+                        <td>misal</td>
+                        <td>85</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script>
+            const searchInput = document.getElementById('searchInput');
+            const allRows = document.querySelectorAll('#tableBody tr');
+            
+            searchInput.addEventListener('keyup', function() {
+                const query = this.value.toLowerCase();
+                allRows.forEach(function(row) {
+                    const name = row.dataset.name;
+
+                    if(name.includes(query)){
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });      
+        </script>
+    </body>
+</html>

@@ -5,31 +5,79 @@
 {% block content %}
 <div class="card shadow text-center ">
     <h1> This is our delicious item </h1>
+    <ul> 
+        <p class="fs-2 fw-bold fst-italic">We surves all types of Food like Werston,south-indian,north-indian Food Items</p>
+           <span class="badge bg-danger fs-6">
+            
+                <p>Total items: {{menus|length}} </p>
+            </span>
+    </ul>
     <hr>
-    <ui> 
-        <p class="fs-2 fw-bold fst-italic">We surves all types of Food like Werston,south-indian,north-indian Food Items</p></div>
-            <hr>
-                <span class="badge bg-danger fs-6">
-                    <p>Total items: {{menus|length}} </p>
-                </span>
-            <hr>
-        <div class="card shadow">
-            <table class ="table table- table-hover table-info"> 
-                    <tr >
-                        <th scope="col">#</th>
-                        <th>item name</th>
-                        <th>price</th>
-                    </tr> 
-                    {% for item in menus %}
-                    <tr>
-                        <th scope="row">{{loop.index}}</th>
-                        <td class="fw-bold">{{item.name}}</td>
-                        <td>{{item.price}}</td>
-                    </tr>
-                    {%endfor%}
-            </table>
-            <a href="{{url_for('order')}}" class="btn btn-danger">order</a> 
-        </div>   
-    </ui>
 </div>
+<div class="mb-3">
+    <input type="text"
+    id="searchInput"
+    class="from-control from-control-lg"
+    placeholder="🔍Type here to search item">
+    <div id="resultInfo" class="text-muted small mt-1"></div>
+</div>
+
+<div id="noResult" class="text-center py-4" style="display:none;">
+    <span style="font-size: 50px;">🔍</span>
+    <h5 class="text-muted mt-2"> no result found</h5>
+    <button onclick="clearSearch()" class="btn btn-dark btn-sm mt-2"> Clear search </button>
+</div>
+
+<div class="card shadow">
+    <table class ="table table- table-hover table-info">
+        <tr>
+            <th scope="col">#</th>
+            <th>item name</th>
+            <th>price</th>
+        </tr>
+        <tbody id="tablebody">
+            {% for item in menus %}
+                <tr data-name="{{ item.name|lower }}">
+                    <th scope="row">{{ loop.index }}</th>
+                    <td class="fw-bold">{{ item.name }}</td>
+                    <td>{{ item.price }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{url_for('order')}}" class="btn btn-danger">order</a> 
+</div>   
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const allRows = document.querySelectorAll('#tablebody tr');
+    const resultInfo = document.getElementById('resultInfo');
+    const noResult = document.getElementById('noResult');
+
+    function clearSearch() {
+        searchInput.value = '';
+        filterRows('');
+    }
+
+    function filterRows(query) {
+        let matchCount = 0;
+        allRows.forEach(function(row) {
+            const name = (row.dataset.name || '').toLowerCase();
+            const isMatch = name.includes(query);
+            row.style.display = isMatch ? '' : 'none';
+            if (isMatch) {
+                matchCount++;
+            }
+        });
+
+        resultInfo.textContent = query
+            ? `${matchCount} item${matchCount === 1 ? '' : 's'} matched`
+            : '';
+        noResult.style.display = matchCount ? 'none' : 'block';
+    }
+
+    searchInput.addEventListener('keyup', function() {
+        const query = this.value.trim().toLowerCase();
+        filterRows(query);
+    });
+</script>
 {% endblock %}
