@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, session, url_for, flash
+from werkzeug.security import generate_password_hash, check_password_hash
 from database import get_db as get_db_menus, init_db as init_db_menus
 from database1 import get_db as get_db_orders, init_db as init_db_orders
+from userdatabase import get_db as get_db_user, init_db as init_db_user
 app = Flask(__name__)
 app.secret_key = 'project2026'
 
@@ -104,9 +106,60 @@ def search():
         menu = conn.execute('SELECT * FROM menus ORDER BY price DESC').fetchall()
     conn.close()
     return render_template("search.html", menus=menu, query=q)
+
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username'].strip()
+        password = request.form['password']
+        
+        conn = get_db_user()
+        # Check if username already exists
+        existing = conn.execute('SELECT * FROM userinfo WHERE name = ?', (username,)).fetchone()
+        if existing:
+            flash('Username already exists!', 'danger')
+            conn.close()
+            return render_template('register.html')
+        
+        hashed = generate_password_hash(password)
+        conn.execute('INSERT INTO userinfo (name, password) VALUES (?, ?)', (username, hashed))
+        conn.commit()
+        conn.close()
+        flash('Registration successful! Please login.', 'success')
+        return redirect(url_for('login'))
     
+    return render_template("register.html")
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        name = request.form['username'].strip()
+        password = request.form['password']
+        
+        conn = get_db_user()
+        user = conn.execute('SELECT * FROM userinfo WHERE name = ?', (name,)).fetchone()
+        conn.close()
+        
+        if user and check_password_hash(user['password'], password):
+            session['name'] = name
+            flash(f'Welcome {name}!', 'success')
+            return redirect(url_for('home'))
+        else:
+            flash('Invalid username or password', 'danger')
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    
+    session.pop('name', None)
+    session.pop('role', None)
+    flash('You have been logged out.', 'info')
+    return redirect(url_for('home'))
 
 if __name__ == "__main__":
     init_db_menus()
     init_db_orders()
+    init_db_user()
     app.run(debug=True)
