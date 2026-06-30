@@ -53,15 +53,15 @@
             <a class="navbar-brand fw-bold fs-5 me-5" href="{{url_for('home')}}"> 🍕 College Canteen</a>
             <div class="navbar-nav ms-auto" >
                 <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('menu')}}"> 🍽 menu</a>
-                <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('add_item')}}"> 🍟 Add Item</a>
+                <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('add_item')}}"> + Add Item</a>
                 <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('order')}}"> 🍔 order</a>
                 <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('about')}}">📍 About</a>
 
-                 <form class="d-flex ms-3 mt-2" action="{{ url_for('search') }}" method="GET">
+                <form class="d-flex ms-3 mt-2" action="{{ url_for('search') }}" method="GET">
                     <input class="form-control form-control-sm me-2" style="width:130px; height:35px" type="search" placeholder="Search" name="q">
                     <button class="btn btn-outline-light btn-sm" style="width:100px; height:35px" type="submit">Search</button>
                 </form>
-                {% if session.username %}
+                {% if session.name %}
                     <span class="nav-link px-2 py-1 text-white">👤 {{ session.username }}</span>
                     <a class="nav-link px-2 py-1" href="{{ url_for('logout') }}">
                         🔓 Logout
@@ -78,18 +78,30 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert dismissible fade show " role="alert">
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
             {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            
-        {% endfor %}
+        </div>
+    {% endfor %}
     {% endif %}
     {% endwith %}
     <div class="container mt-4">
     {% block content %}
      {% endblock %} 
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.alert').forEach(function (alertEl) {
+                setTimeout(function () {
+                    alertEl.classList.remove('show');
+                    setTimeout(function () {
+                        alertEl.remove();
+                    }, 150);
+                }, 3000);
+            });
+        });
+    </script>
 </body>
 
      <footer style="background-color: #1e3a5f;" class="text-white text-center py-3 mt-5">
@@ -99,5 +111,4 @@
             Projected by Santosh Kshirsagar
         </small>
     </footer>
-</body>
 </html>

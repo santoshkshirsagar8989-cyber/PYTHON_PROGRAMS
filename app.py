@@ -30,6 +30,10 @@ def about():
 
 @app.route('/order', methods=['GET', 'POST'])
 def order():
+    if 'name' not in session:
+        flash(f"please login first", 'danger')
+        return redirect(url_for('login'))
+
     if request.method == 'POST':
         name = request.form.get('name')
         price = request.form.get('price')
@@ -64,6 +68,10 @@ def menu():
 
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
+    if 'name' not in session:
+        flash(f"please login first", 'danger')
+        return redirect(url_for('login'))
+    
     if request.method == "POST":
         name = request.form.get('name')
         price = request.form.get('price')
@@ -144,6 +152,7 @@ def login():
         
         if user and check_password_hash(user['password'], password):
             session['name'] = name
+            session['role']=user['role']
             flash(f'Welcome {name}!', 'success')
             return redirect(url_for('home'))
         else:

@@ -11,14 +11,18 @@ def get_db():
     return conn
 
 def init_db():
-    """Create Table"""
     conn = get_db()
     conn.execute('''CREATE TABLE IF NOT EXISTS userinfo
                  (id INTEGER PRIMARY KEY AUTOINCREMENT,
                  name TEXT NOT NULL,
-                 password NUMBER NOT NULL
+                 password TEXT NOT NULL
                  )
                  ''')
+    try:
+        conn.execute("ALTER TABLE userinfo ADD COLUMN role TEXT DEFAULT 'customer' " )
+    except Exception:
+        #column allready exist
+        pass
     
     conn.commit()
     conn.close()

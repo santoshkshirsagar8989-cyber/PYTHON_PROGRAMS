@@ -6,13 +6,12 @@
 <div class="card shadow text-center ">
     <h1> This is our delicious item </h1>
         <p class="fs-2 fw-bold fst-italic">We surves all types of Food like Werston,south-indian,north-indian Food Items</p>
-           <span class="badge bg-danger fs-6">
-            
+            <span class="badge bg-danger fs-6">
                 <p>Total items: {{menus|length}} </p>
             </span>
 </div>
 
-    <div class="mt-3 mb-3">
+    <div class="p-3">
         <input type="text"
         id="searchInput"
         class="from-control from-control-lg"
@@ -45,8 +44,10 @@
         </tbody>
         </ul>
     </table>
-    <a href="{{url_for('order')}}" class="btn btn-danger">order</a> 
-</div>   
+</div>
+<div class="text-center mt-5" >
+    <a href="{{url_for('order')}}" class="btn btn-light">🛒 Order</a>
+</div>    
 <script>
     const searchInput = document.getElementById('searchInput');
     const allRows = document.querySelectorAll('#tablebody tr');
