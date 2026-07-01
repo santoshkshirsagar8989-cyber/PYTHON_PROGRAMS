@@ -68,8 +68,8 @@ def menu():
 
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
-    if 'name' not in session:
-        flash(f"please login first", 'danger')
+    if session.get('role') != 'employee':
+        flash(f"only for employee,You can use order to buy items ", 'danger')
         return redirect(url_for('login'))
     
     if request.method == "POST":
@@ -143,16 +143,20 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        name = request.form['username'].strip()
-        password = request.form['password']
+        name = request.form.get('username', '').strip()
+        password = request.form.get('password', '')
+
+        if not name or not password:
+            flash('Please enter both username and password.', 'danger')
+            return render_template('login.html')
         
         conn = get_db_user()
-        user = conn.execute('SELECT * FROM userinfo WHERE name = ?', (name,)).fetchone()
+        user = conn.execute('SELECT id, name, password, role FROM userinfo WHERE name = ?', (name,)).fetchone()
         conn.close()
         
         if user and check_password_hash(user['password'], password):
             session['name'] = name
-            session['role']=user['role']
+            session['role'] = user['role'] if user['role'] else 'customer'
             flash(f'Welcome {name}!', 'success')
             return redirect(url_for('home'))
         else:

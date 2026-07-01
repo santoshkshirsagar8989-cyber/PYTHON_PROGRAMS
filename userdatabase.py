@@ -18,11 +18,10 @@ def init_db():
                  password TEXT NOT NULL
                  )
                  ''')
-    try:
-        conn.execute("ALTER TABLE userinfo ADD COLUMN role TEXT DEFAULT 'customer' " )
-    except Exception:
-        #column allready exist
-        pass
+
+    column_names = [row[1] for row in conn.execute("PRAGMA table_info(userinfo)").fetchall()]
+    if 'role' not in column_names:
+        conn.execute("ALTER TABLE userinfo ADD COLUMN role TEXT DEFAULT 'customer'")
     
     conn.commit()
     conn.close()

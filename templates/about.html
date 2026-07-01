@@ -1,19 +1,27 @@
 {% extends "base.html" %}
 {% block title %} About our canteen {% endblock %}
 {% block content %}
-<div class="d-flex justify-content-center align-item-center" style="height: 380px;">
-    <div class="col-md-9">
-        <div class="card shadow">
-            <div class="card-body">
-                <h1 class="card-text fw-bold mt-1">This project is simple flask demo application</h1>
-                <hr>
-                <p class="fst-italic">Welcome to canteen, Sorry for any single mistake made our staff !</p>
-                <p class="fst-italic">Welcome to canteen, Sorry for any single mistake made our staff !</p>
-                <p class="fst-italic">We're very thackfull you visited our canteen </p>
-                <p class="fst-italic">Tihs is our Mobile number : 123456789</p>
-                <p class="fst-italic">For any enquiry you must visit our email</p>
-                <p class="fst-italic">Email id : canteen@gmail.com</p>
-                <P><a href="{{url_for('home')}}" class="btn btn-info">Back to home </a></p>
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body p-5">
+                <h1 class="fw-bold mb-3">About College Canteen</h1>
+                <p class="lead mb-4">This project is built using Flask, Python, Jinja, Bootstrap, and SQLite to demonstrate a simple college canteen ordering system.</p>
+
+                <h3 class="mb-3">What this app offers</h3>
+                <ul class="list-group list-group-flush mb-4">
+                    <li class="list-group-item">Menu browsing with search support</li>
+                    <li class="list-group-item">User registration and secure login</li>
+                    <li class="list-group-item">Add menu items for employees</li>
+                    <li class="list-group-item">Order creation and basket display</li>
+                </ul>
+
+                <h3 class="mb-3">Contact & Support</h3>
+                <p class="mb-1">If you have questions or want to report a bug, please reach out.</p>
+                <p class="mb-1"><strong>Phone:</strong> 123-456-789</p>
+                <p class="mb-4"><strong>Email:</strong> canteen@gmail.com</p>
+
+                <a href="{{ url_for('home') }}" class="btn btn-info">Back to Home</a>
             </div>
         </div>
     </div>

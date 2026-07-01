@@ -5,16 +5,16 @@
         <div class="card shadow-sm">
             <div class="card-body p-4">
                 <h4 class="fw-bold mb-3">Login</h4>
-                <form method="POST" action="{{url_for('login')}}">
-                    <input type="text" name="username" class="form-control mb-2" placeholder="Username"> 
-                    <input type="password" name="password" class="form-control mb-2" placeholder="Password">
-                    <button type="submit" class="btn btn-dark">Login</button>
+                <form method="POST" action="{{ url_for('login') }}">
+                    <input type="text" name="username" class="form-control mb-3" placeholder="👤 Username">
+                    <input type="password" name="password" class="form-control mb-3" placeholder="🔒 Password" >
+                    <button type="submit" class="btn btn-dark w-100">Login</button>
                 </form>
-                <p class="text-center mt-3 mb-0">
-                    No account? <a href="{{ url_for('register') }}">Register here</a>
+                <p class="fw-bold text-center mt-3 mb-0">
+                Dont't have an Account ?<a href="{{ url_for('register') }}">Register Here 🔑</a>
                 </p>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}         
+{% endblock %}

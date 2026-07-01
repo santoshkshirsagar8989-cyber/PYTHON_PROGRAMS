@@ -1,94 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-2">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{%block title %} Colage Canteen {% endblock %}</title> <align="left">
+    <title>{% block title %}College Canteen{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .navbar {
-            min-height: 60px;
-        }
         :root {
             --brand: #1e3a5f;
+            --brand-dark: #162d4a;
+            --accent: #3dac99;
+            --surface: #f7fbff;
+            --surface-strong: #ffffff;
         }
-        .navbar-brand-custom { background-color: var(--brand); }
+
+        html, body {
+            min-height: 100%;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #eef6ff 0%, #f8fbf8 100%);
+            color: #1d2540;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-shell {
+            flex: 1 0 auto;
+        }
+
+        .navbar {
+            min-height: 72px;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3dac99 100%);
+        }
+
+        .navbar-brand,
+        .nav-link,
+        .navbar-toggler-icon {
+            color: #ffffff !important;
+        }
+
+        .nav-link {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav-link:hover,
+        .navbar-brand:hover {
+            color: #f8f9fa !important;
+        }
+
+        .navbar .form-control {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        .navbar .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        .navbar .form-control:focus {
+            box-shadow: none;
+            border-color: rgba(255, 255, 255, 0.55);
+        }
+
         .btn-brand {
             background-color: var(--brand);
             color: white;
             border: none;
         }
-        .btn-brand:hover { background-color: #162d4a; color: white; }
-        .hero-section {
-            background: linear-gradient(135deg, #1e3a5f 0%, #2d6a9f 100%);
+
+        .btn-brand:hover {
+            background-color: var(--brand-dark);
             color: white;
-            border-radius: 12px;
         }
-        .nav-link {
-            font-size: 0.95rem;
-            font-weight: 500;
+
+        .hero-section {
+            background: linear-gradient(135deg, #1f3c88 0%, #4a90e2 100%);
+            color: white;
+            border-radius: 18px;
+            padding: 2rem 1.75rem;
+            margin-bottom: 1.75rem;
         }
-        .stat-card {
+
+        .hero-title {
+            font-size: clamp(2rem, 2.5vw, 3rem);
+            line-height: 1.05;
+        }
+
+        .hero-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .content-card {
             border: none;
-            border-radius: 12px;
-            transition: transform 0.2s;
+            border-radius: 20px;
+            background: var(--surface-strong);
+            box-shadow: 0 12px 30px rgba(30, 58, 95, 0.08);
+            overflow: hidden;
         }
-        .stat-card:hover { transform: translateY(-3px); }
-        .student-card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: transform 0.2s, box-shadow 0.2s;
+
+        .content-card .card-body {
+            padding: 1.75rem;
         }
-        .student-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+
+        .footer-shell {
+            flex-shrink: 0;
+            background-color: var(--brand);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .footer-shell small {
+            opacity: 0.88;
+        }
+
+        .alert {
+            border-radius: 0.85rem;
         }
     </style>
 </head>
-<body class="bg-ligt">
-     <nav class="navbar navbar-expand navbar-dark shadow-sm"
-         style="background-color: #3dac99b4;">
-        <div class="container justify-content-center"> 
-            <a class="navbar-brand fw-bold fs-5 me-5" href="{{url_for('home')}}"> 🍕 College Canteen</a>
-            <div class="navbar-nav ms-auto" >
-                <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('menu')}}"> 🍽 menu</a>
-                <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('add_item')}}"> + Add Item</a>
-                <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('order')}}"> 🍔 order</a>
-                <a class="navbar-brand fw-bold fs-5 me-3" href="{{url_for('about')}}">📍 About</a>
-
-                <form class="d-flex ms-3 mt-2" action="{{ url_for('search') }}" method="GET">
-                    <input class="form-control form-control-sm me-2" style="width:130px; height:35px" type="search" placeholder="Search" name="q">
-                    <button class="btn btn-outline-light btn-sm" style="width:100px; height:35px" type="submit">Search</button>
-                </form>
-                {% if session.name %}
-                    <span class="nav-link px-2 py-1 text-white">👤 {{ session.username }}</span>
-                    <a class="nav-link px-2 py-1" href="{{ url_for('logout') }}">
-                        🔓 Logout
-                    </a>
-                {% else %}
-                    <a class="nav-link px-2 py-1" href="{{ url_for('login') }}">
-                        🔒 Login
-                    </a>
-                {% endif %}
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-5" href="{{ url_for('home') }}">🍕 College Canteen</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <div class="navbar-nav ms-auto align-items-center">
+                    <a class="nav-link px-3" href="{{ url_for('menu') }}">🍽 Menu</a>
+                    {% if session.role == 'employee' %}
+                    <a class="nav-link px-3" href="{{ url_for('add_item') }}">+ Add Item</a>
+                    {% endif %}
+                    <a class="nav-link px-3" href="{{ url_for('order') }}">🍔 Order</a>
+                    <a class="nav-link px-3" href="{{ url_for('about') }}">📍 About</a>
+                    <form class="d-flex align-items-center ms-3 mt-3 mt-lg-0" action="{{ url_for('search') }}" method="GET">
+                        <input class="form-control form-control-sm me-2" style="width: 150px;" type="search" placeholder="Search" name="q">
+                        <button class="btn btn-outline-light btn-sm" type="submit">Search</button>
+                    </form>
+                    {% if session.name %}
+                    <span class="nav-link px-2 py-1 text-white">👤 {{ session.name }}</span>
+                    <a class="nav-link px-2 py-1" href="{{ url_for('logout') }}">🔓 Logout</a>
+                    {% else %}
+                    <a class="nav-link px-2 py-1" href="{{ url_for('login') }}">🔒 Login</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </nav>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <main class="page-shell">
+        <div class="container mt-4 mb-5">
+            <div class="hero-section text-center mx-auto" style="max-width: 980px;">
+                <h1 class="hero-title fw-bold mb-3">Welcome to the College Canteen</h1>
+                <p class="hero-subtitle fs-5 mb-0">Enjoy a smoother ordering experience with modern styling, quick actions, and responsive layout.</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <div class="content-card mt-4">
+                <div class="card-body">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
         </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-    <div class="container mt-4">
-    {% block content %}
-     {% endblock %} 
-    </div>
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -102,13 +197,9 @@
             });
         });
     </script>
-</body>
 
-     <footer style="background-color: #1e3a5f;" class="text-white text-center py-3 mt-5">
-        <small>
-            🎓 College Canteen &nbsp;|&nbsp;
-            Built with Python + Flask + Bootstrap &nbsp;|&nbsp;
-            Projected by Santosh Kshirsagar
-        </small>
+    <footer class="footer-shell">
+        <small>🎓 College Canteen | Built with Python + Flask + Bootstrap | Projected by Santosh Kshirsagar</small>
     </footer>
+</body>
 </html>
