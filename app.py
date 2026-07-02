@@ -178,8 +178,9 @@ def beverages():
     conn.close()
     return render_template("beverages.html", rows=rows)
 
+init_db_menus()
+init_db_orders()
+init_db_user()
+
 if __name__ == "__main__":
-    init_db_menus()
-    init_db_orders()
-    init_db_user()
     app.run(debug=True)
