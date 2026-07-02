@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %} Beverages {% endblock %}
+
+{% block content %}
+<h2 class="fw-bold" mb-4>Choose Your Beverage</h2>
+    <div class="row">
+        {% for row in rows %}
+        <div class="col-md-3 mb-3">
+            <div class="card shadow text-center p-3 card-hover">
+                <h2 class="fw-bold" >{{ row['beverage_count'] }}</h2>
+                <p class="fw-bold" style="color:rgba(212, 8, 53, 0.897)">{{ row['beverage_name'] }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+{% endblock %}

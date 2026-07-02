@@ -19,9 +19,22 @@ def init_db():
                  price INTEGER NOT NULL)
                  ''')
     
+
+    conn.execute('''CREATE TABLE IF NOT EXISTS beverages(
+                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                 name TEXT NOT NULL UNIQUE)
+                 ''')
+    default_beverages = ['Tea', 'Coffee', 'Water']
+    for beverage in default_beverages:
+        try:
+            conn.execute('INSERT INTO beverages (name) values (?)', (beverage,))
+        except sqlite3.IntegrityError:
+            # Ignore if the beverage already exists
+            pass
+    
     conn.commit()
     conn.close()
-
+    
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)

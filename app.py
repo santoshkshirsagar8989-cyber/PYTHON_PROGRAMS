@@ -9,11 +9,7 @@ app.secret_key = 'project2026'
 items=[]
 
 Menus = [
-    {"name":"pizza","price":100},
-    {"name":"Burger","price":50},
-    {"name":"Sandwich","price":75},
-    {"name":"Pasta","price":120},
-    {"name":"Vadapav","price":30}
+    { "SELECT * FROM menus ORDER BY price DESC" }
 ]
 
 @app.route('/')
@@ -170,6 +166,17 @@ def logout():
     session.pop('role', None)
     flash('You have been logged out.', 'info')
     return redirect(url_for('home'))
+
+@app.route('/beverages')
+def beverages():
+    conn = get_db_menus()
+    rows = conn.execute('''SELECT beverages.name AS beverage_name, COUNT(menus.id) AS beverage_count
+                         FROM beverages
+                         LEFT JOIN menus ON beverages.name = menus.name
+                         GROUP BY beverages.name
+                         ORDER BY beverages.name ''').fetchall()
+    conn.close()
+    return render_template("beverages.html", rows=rows)
 
 if __name__ == "__main__":
     init_db_menus()
