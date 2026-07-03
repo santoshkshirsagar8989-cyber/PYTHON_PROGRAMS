@@ -34,13 +34,14 @@ def order():
         name = request.form.get('name')
         price = request.form.get('price')
         quantity  = request.form.get('quantity')
+        place = request.form.get('place')
 
-        if not name or not price or not quantity:
+        if not name or not price or not quantity or not place:
             flash('please provide both name ans price','danger')
             return render_template("order.html")
         conn = get_db_orders()
-        conn.execute(''' INSERT INTO allorder(name,price,quantity) VALUES(?,?,?)''',
-                    (name,price,quantity)
+        conn.execute(''' INSERT INTO allorder(name,price,quantity,place) VALUES(?,?,?,?)''',
+                    (name,price,quantity,place)
                     )
         
         conn.commit()

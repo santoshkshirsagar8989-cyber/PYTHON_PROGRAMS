@@ -74,6 +74,7 @@
             <th>💲 Price</th>
             <th>🔢 Quantity</th>
             <th>✅ Total</th>
+            <th>📍 Place</th>
           </tr>
         </thead>
         <tbody>
@@ -83,6 +84,7 @@
             <td>{{ item.price }}</td>
             <td>{{ item.quantity }}</td>
             <td>{{ ((item.price|default(0)|float) * (item.quantity|default(0)|int)) }}</td>
+            <td>{{ item.place }}</td>
           </tr>
           {% endfor %}
         </tbody>
