@@ -101,4 +101,46 @@
   <div class="text-center mb-3 mt-4">
     <a href="{{ url_for('menu') }}" class="btn btn-secondary-custom btn-lg px-4 w-100 w-md-auto">🛒 Order Another</a>
   </div>
+
+  <div class="card table-card mt-4">
+    <div class="card-body p-0">
+      {% if items %}
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Item</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Total</th>
+              <th>Place</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in items %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.price * item.quantity }}</td>
+              <td>{{ item.place }}</td>
+              <td>
+                <a href="{{ url_for('order_deatil', order_id=item.id) }}" class="btn btn-sm btn-outline-primary">View</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="p-4 text-center text-muted">
+        No orders yet. Add your first order above.
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
 {% endblock %}
