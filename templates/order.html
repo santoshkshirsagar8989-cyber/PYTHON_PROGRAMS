@@ -9,6 +9,8 @@
     border-radius: 24px;
     padding: 28px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .hero-card {
@@ -35,6 +37,11 @@
     border-radius: 20px;
     background: linear-gradient(135deg, #ffffff 0%, #f9fbff 100%);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+  }
+
+  .form-control {
+    min-width: 0;
   }
 
   .btn-custom {
@@ -57,11 +64,11 @@
   }
 </style>
 
-<div class="order-page">
-  <div class="row justify-content-center mt-4">
-    <div class="col-lg-8">
-      <div class="card form-card p-3 p-md-4">
-        <div class="card-body card-hover">
+<div class="order-page p-3 p-md-4">
+  <div class="row justify-content-center mt-2 mt-md-4">
+    <div class="col-12 col-lg-8">
+      <div class="card form-card p-2 p-md-4">
+        <div class="card-body card-hover p-2 p-md-3">
           <h2 class="fw-bold text-center mb-4">➕ Add Your Food</h2>
           <form action="{{ url_for('order') }}" method="POST" class="text-start">
             <div class="row g-3">
@@ -91,41 +98,7 @@
     </div>
   </div>
 
-  <div class="text-center mb-3 mt-4 ">
-    <a href="{{ url_for('menu') }}" class="btn btn-secondary-custom btn-lg px-4">🛒 Order Another</a>
+  <div class="text-center mb-3 mt-4">
+    <a href="{{ url_for('menu') }}" class="btn btn-secondary-custom btn-lg px-4 w-100 w-md-auto">🛒 Order Another</a>
   </div>
-
-  {% if items %}
-  <div class="card table-card mt-4">
-    <div class="card-body card-hover p-2">
-      <table class="table table-hover mb-0 align-middle">
-        <thead>
-          <tr>
-            <th>📦 Item Name</th>
-            <th>💲 Price</th>
-            <th>🔢 Quantity</th>
-            <th>✅ Total</th>
-            <th>📍 Place</th>
-            <th>🔎 Detail</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in items %}
-          <tr>
-            <td>{{ item.name }}</td>
-            <td>{{ item.price }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>{{ (item.price|float) * (item.quantity|int) }}</td>
-            <td>{{ item.place }}</td>
-            <td>
-              <a href="{{ url_for('order_deatil', order_id=item.id) }}" class="btn btn-sm btn-outline-primary">View Detail</a>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-  {% endif %}
-</div>
 {% endblock %}
