@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Order Detail{% endblock %}
+
+{% block content %}
+<style>
+  .order-page {
+    background: linear-gradient(135deg, #fff8f2 0%, #f4f8ff 100%);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .hero-card {
+    background: linear-gradient(135deg, #1f3c88 0%, #4a90e2 100%);
+    color: white;
+    border: none;
+    border-radius: 20px;
+  }
+
+  .table-card {
+    border: none;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  }
+
+  .btn-secondary-custom {
+    background: linear-gradient(135deg, #198754 0%, #20c997 100%);
+    color: white;
+    border: none;
+  }
+</style>
+
+<div class="order-page">
+  <div class="card hero-card shadow-sm mb-4">
+    <div class="card-body text-center py-5">
+      <h1 class="fw-bold mb-2">📋 Order Details</h1>
+      <p class="mb-0 fs-5">Here is the order you selected.</p>
+    </div>
+  </div>
+
+  <div class="card table-card mb-4">
+    <div class="card-body card-hover">
+      <table class="table table-hover mb-0 align-middle">
+        <tbody>
+          <tr>
+            <th class="fw-semibold">📦 Item Name</th>
+            <td>{{ order.name }}</td>
+          </tr>
+          <tr>
+            <th class="fw-semibold">💲 Price</th>
+            <td>{{ order.price }}</td>
+          </tr>
+          <tr>
+            <th class="fw-semibold">🔢 Quantity</th>
+            <td>{{ order.quantity }}</td>
+          </tr>
+          <tr>
+            <th class="fw-semibold">✅ Total</th>
+            <td>{{ (order.price|float) * (order.quantity|int) }}</td>
+          </tr>
+          <tr>
+            <th class="fw-semibold">📍 Place</th>
+            <td>{{ order.place }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <a href="{{ url_for('order') }}" class="btn btn-secondary-custom btn-lg px-4">← Back to Orders</a>
+  </div>
+    <div class="text-center mt-4">
+        <form action="{{ url_for('cancel_order', order_id=order.id) }}" method="post" class="d-inline">
+            <button type="submit" class="btn btn-danger btn-lg px-4" onclick="return confirm('Are you sure you want to cancel this order?')">❌ Cancel Order</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

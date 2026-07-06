@@ -55,6 +55,40 @@ def order():
     conn.close()
     return render_template('order.html', items=items)
 
+@app.route('/order_deatil/<int:order_id>')
+def order_deatil(order_id):
+    if 'name' not in session:
+        flash('Please login first', 'danger')
+        return redirect(url_for('login'))
+
+    conn = get_db_orders()
+    order = conn.execute('SELECT * FROM allorder WHERE id = ?', (order_id,)).fetchone()
+    conn.close()
+
+    if not order:
+        flash('You have not placed any order yet.', 'danger')
+        return redirect(url_for('order'))
+
+    return render_template('order_deatil.html', order=order)
+
+@app.route('/cancel_order/<int:order_id>', methods=['POST'])
+def cancel_order(order_id):
+    if 'name' not in session:
+        flash('Please login first', 'danger')
+        return redirect(url_for('login'))
+
+    conn = get_db_orders()
+    order = conn.execute('SELECT id FROM allorder WHERE id = ?', (order_id,)).fetchall()
+
+    if order:
+        conn.execute('DELETE FROM allorder WHERE id = ?', (order_id,))
+        conn.commit()
+        flash('Order cancelled successfully', 'success')
+    else:
+        flash('Order not found', 'danger')
+
+    conn.close()
+    return redirect(url_for('order'))
 
 @app.route("/menu")
 def menu():
