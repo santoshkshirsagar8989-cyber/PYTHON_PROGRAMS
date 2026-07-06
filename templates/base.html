@@ -6,13 +6,6 @@
     <title>{% block title %}College Canteen{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        :root {
-            --brand: #1e3a5f;
-            --brand-dark: #162d4a;
-            --accent: #3dac99;
-            --surface: #f7fbff;
-            --surface-strong: #ffffff;
-        }
 
         html, body {
             min-height: 100%;
@@ -127,6 +120,9 @@
             opacity: 0.88;
         }
 
+        :root {
+            --brand: #0d6e94;
+        }
         .alert {
             border-radius: 0.85rem;
         }
@@ -140,24 +136,42 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mainNav">
-                <div class="navbar-nav ms-auto align-items-center">
-                    <a class="nav-link px-3" href="{{ url_for('menu') }}">🍽 Menu</a>
-                    <a class="nav-link px-3" href="{{ url_for('beverages') }}">🥤 Beverages</a>
+                <div class="navbar-nav ms-auto align-items-lg-center">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="{{ url_for('menu') }}">🍽 Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="{{ url_for('beverages') }}">🥤 Beverages</a>
+                    </li>
                     {% if session.role == 'employee' %}
-                    <a class="nav-link px-3" href="{{ url_for('add_item') }}">+ Add Item</a>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="{{ url_for('add_item') }}">+ Add Item</a>
+                    </li>
                     {% endif %}
-                    <a class="nav-link px-3" href="{{ url_for('order') }}">🍔 Order</a>
-                    <a class="nav-link px-3" href="{{ url_for('about') }}">📍 About</a>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="{{ url_for('order') }}">🍔 Order</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="{{ url_for('about') }}">📍 About</a>
+                    </li>
                     <form class="d-flex align-items-center ms-3 mt-3 mt-lg-0" action="{{ url_for('search') }}" method="GET">
                         <input class="form-control form-control-sm me-2" style="width: 150px;" type="search" placeholder="Search" name="q">
                         <button class="btn btn-outline-light btn-sm" type="submit">Search</button>
                     </form>
                     {% if session.name %}
-                    <span class="nav-link px-2 py-1 text-white">👤 {{ session.name }}</span>
-                    <a class="nav-link px-2 py-1" href="{{ url_for('logout') }}">🔓 Logout</a>
+                    <li class="nav-item">
+                        <span class="nav-link px-2 py-1 text-white">👤 {{ session.name }}</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-2 py-1" href="{{ url_for('logout') }}">🔓 Logout</a>
+                    </li>
                     {% else %}
-                    <a class="nav-link px-2 py-1" href="{{ url_for('login') }}">🔒 Login</a>
+                    <li class="nav-item">
+                        <a class="nav-link px-2 py-1" href="{{ url_for('login') }}">🔒 Login</a>
+                    </li>
                     {% endif %}
+                </ul>
                 </div>
             </div>
         </div>
@@ -193,7 +207,6 @@
             </div>
         </div>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.alert').forEach(function (alertEl) {
