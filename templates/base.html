@@ -137,41 +137,23 @@
             </button>
             <div class="collapse navbar-collapse" id="mainNav">
                 <div class="navbar-nav ms-auto align-items-lg-center">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="{{ url_for('menu') }}">🍽 Menu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="{{ url_for('beverages') }}">🥤 Beverages</a>
-                    </li>
+                    <a class="nav-link px-3" href="{{ url_for('menu') }}">🍽 Menu</a>
+                    <a class="nav-link px-3" href="{{ url_for('beverages') }}">🥤 Beverages</a>
                     {% if session.role == 'employee' %}
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="{{ url_for('add_item') }}">+ Add Item</a>
-                    </li>
+                    <a class="nav-link px-3" href="{{ url_for('add_item') }}">+ Add Item</a>
                     {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="{{ url_for('order') }}">🍔 Order</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="{{ url_for('about') }}">📍 About</a>
-                    </li>
+                    <a class="nav-link px-3" href="{{ url_for('order') }}">🍔 Order</a>
+                    <a class="nav-link px-3" href="{{ url_for('about') }}">📍 About</a>
                     <form class="d-flex align-items-center ms-3 mt-3 mt-lg-0" action="{{ url_for('search') }}" method="GET">
                         <input class="form-control form-control-sm me-2" style="width: 150px;" type="search" placeholder="Search" name="q">
                         <button class="btn btn-outline-light btn-sm" type="submit">Search</button>
                     </form>
                     {% if session.name %}
-                    <li class="nav-item">
-                        <span class="nav-link px-2 py-1 text-white">👤 {{ session.name }}</span>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-2 py-1" href="{{ url_for('logout') }}">🔓 Logout</a>
-                    </li>
+                    <span class="nav-link px-2 py-1 text-white">👤 {{ session.name }}</span>
+                    <a class="nav-link px-2 py-1" href="{{ url_for('logout') }}">🔓 Logout</a>
                     {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link px-2 py-1" href="{{ url_for('login') }}">🔒 Login</a>
-                    </li>
+                    <a class="nav-link px-2 py-1" href="{{ url_for('login') }}">🔒 Login</a>
                     {% endif %}
-                </ul>
                 </div>
             </div>
         </div>
