@@ -8,7 +8,8 @@ from database import get_db as get_db_menus, init_db as init_db_menus
 from database1 import get_db as get_db_orders, init_db as init_db_orders
 from userdatabase import get_db as get_db_user, init_db as init_db_user
 
-load_dotenv()
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 app = Flask(__name__)
 app.secret_key = 'project2026'
