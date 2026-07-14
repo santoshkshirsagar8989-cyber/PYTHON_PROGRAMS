@@ -72,7 +72,6 @@ def get_ai_tip(id):
         return redirect(url_for('order'))  # Redirect to a list of orders or another appropriate
          # trigger 404.html
     prompt = f"""
-    customer_name: {order['name']}
     customer_order: {order['name']}
     customer_quantity: {order['quantity']}
     please provide a summary of the customer order is healthy or not.it sort the summary in a single sentence.
