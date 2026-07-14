@@ -29,6 +29,92 @@
     color: white;
     border: none;
   }
+
+  .ai-tips-box {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 24px;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ai-tips-box::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); }
+    50% { transform: translateY(-20px) translateX(20px); }
+  }
+
+  .ai-tips-content {
+    position: relative;
+    z-index: 1;
+    color: white;
+  }
+
+  .ai-tips-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .ai-tips-icon {
+    font-size: 24px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  .ai-tips-text {
+    font-size: 15px;
+    line-height: 1.6;
+    opacity: 0.95;
+    margin-bottom: 16px;
+  }
+
+  .ai-tips-box .btn-primary {
+    background: rgba(255, 255, 255, 0.25);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .ai-tips-box .btn-primary:hover {
+    background: rgba(255, 255, 255, 0.4);
+    border-color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .ai-tips-alert {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
 </style>
 
 <div class="order-page">
@@ -65,14 +151,24 @@
           </tr>
         </tbody>
       </table>
-      <-- Display AI Tip -- >
-      <div class="mt-4 p-3 bg-light rounded">
-        <h5 class="fw-semibold">💡 AI Tip:</h5>
-        {% if tip %}
-          <div class="alert alert-info">{{ tip }}</div>
-        {% else %}
-          <a href="{{ url_for('get_ai_tip', id=order.id) }}" class="btn btn-primary">Get AI Tip</a>
-        {% endif %}
+      <!-- AI Tips Box -->
+      <div class="ai-tips-box">
+        <div class="ai-tips-content">
+          <div class="ai-tips-header">
+            <span class="ai-tips-icon">✨</span>
+            <span>AI Tips & Insights</span>
+          </div>
+          {% if tip %}
+            <div class="ai-tips-text ai-tips-alert">
+              {{ tip }}
+            </div>
+          {% else %}
+            <p class="ai-tips-text mb-0">Get personalized AI-powered tips for this order!</p>
+            <a href="{{ url_for('get_ai_tip', id=order.id) }}" class="btn btn-primary btn-sm">
+              🤖 Generate AI Tip
+            </a>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
