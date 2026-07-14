@@ -1,8 +1,15 @@
+import os
+
 from flask import Flask, render_template, request, redirect, session, url_for, flash
+from flask.cli import load_dotenv
+from groq import Groq
 from werkzeug.security import generate_password_hash, check_password_hash
 from database import get_db as get_db_menus, init_db as init_db_menus
 from database1 import get_db as get_db_orders, init_db as init_db_orders
 from userdatabase import get_db as get_db_user, init_db as init_db_user
+
+load_dotenv()
+
 app = Flask(__name__)
 app.secret_key = 'project2026'
 
@@ -54,6 +61,31 @@ def order():
     items = conn.execute('SELECT * FROM allorder').fetchall()
     conn.close()
     return render_template('order.html', items=items)
+
+@app.route("/order/<int:id>/tip")
+def get_ai_tip(id):
+    conn = get_db_orders()
+    order = conn.execute('SELECT * FROM allorder WHERE id = ?', (id,)).fetchone()
+    conn.close()
+    if order is None:
+        flash('Order not found', 'danger')
+        return redirect(url_for('order'))  # Redirect to a list of orders or another appropriate
+         # trigger 404.html
+    prompt = f"""
+    customer_name: {order['name']}
+    customer_order: {order['name']}
+    customer_quantity: {order['quantity']}
+    please provide a summary of the customer order is healthy or not.it sort the summary in a single sentence.
+    """
+    client = Groq(api_key=(os.getenv("GROQ_API_KEY")))
+    response = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
+    tip = response.choices[0].message.content
+    return render_template("order_deatil.html", order=order, tip=tip)
 
 @app.route('/order_deatil/<int:order_id>')
 def order_deatil(order_id):

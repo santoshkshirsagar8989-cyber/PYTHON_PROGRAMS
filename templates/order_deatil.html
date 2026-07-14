@@ -65,6 +65,15 @@
           </tr>
         </tbody>
       </table>
+      <-- Display AI Tip -- >
+      <div class="mt-4 p-3 bg-light rounded">
+        <h5 class="fw-semibold">💡 AI Tip:</h5>
+        {% if tip %}
+          <div class="alert alert-info">{{ tip }}</div>
+        {% else %}
+          <a href="{{ url_for('get_ai_tip', id=order.id) }}" class="btn btn-primary">Get AI Tip</a>
+        {% endif %}
+      </div>
     </div>
   </div>
 

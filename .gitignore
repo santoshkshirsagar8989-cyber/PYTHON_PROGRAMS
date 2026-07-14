@@ -1,2 +1,5 @@
 *.db
 API.txt
+.env
+__pycache__/
+*.pyc

@@ -1,6 +1,8 @@
+import os
+
 from groq import Groq
 
-client = Groq(api_key="my_api_key")
+client = Groq(api_key=(os.getenv("GROQ_API_KEY")))
 
 customer_name = "santosh"
 customer_order = "Vada"
@@ -12,8 +14,7 @@ prompt = f"""
 customer name: {customer_name}
 customer order: {customer_order}
 customer quantity: {customer_quantity}
-customer bill: {customer_bill}
-please provide all of above
+please provide a summary of the customer order is healthy or not.
 """
 #step 2:
 response = client.chat.completions.create(
