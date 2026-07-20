@@ -77,6 +77,7 @@
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th> Item Image</th>
             <th>🍜 Item Name</th>
             <th>💲 Price</th>
           </tr>
@@ -85,6 +86,13 @@
           {% for item in menus %}
             <tr data-name="{{ item.name|lower }}">
               <th scope="row">{{ loop.index }}</th>
+              <td>
+                <div class="d-flex align-items-center">
+                  <img src="{{ url_for('static', filename='uploads/' ~ (item.photo if item.photo and item.photo not in ['defult.png', 'default.png'] else 'icon.png')) }}"
+                       class="img-fluid" style="max-height:50px; max-width:60px; object-fit:cover;"
+                       alt="{{ item.name }}">
+                </div>
+              </td>
               <td class="fw-bold">{{ item.name }}</td>
               <td>{{ item.price }}</td>
             </tr>

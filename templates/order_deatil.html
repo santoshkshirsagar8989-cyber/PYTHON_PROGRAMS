@@ -134,6 +134,15 @@
             <td>{{ order.name }}</td>
           </tr>
           <tr>
+            <th class="fw-semibold">� Item Photo</th>
+            <td>
+              <img src="{{ url_for('static', filename='uploads/' ~ (order.photo if order.photo and order.photo not in ['defult.png', 'default.png'] else 'icon.png')) }}"
+                   alt="{{ order.name }}"
+                   class="img-fluid rounded"
+                   style="max-height: 40px; max-width: 120px; object-fit:cover;">
+            </td>
+          </tr>
+          <tr>
             <th class="fw-semibold">💲 Price</th>
             <td>{{ order.price }}</td>
           </tr>

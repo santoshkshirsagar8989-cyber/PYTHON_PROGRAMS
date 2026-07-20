@@ -22,7 +22,10 @@ def init_db():
                  name TEXT NOT NULL,
                  price INTEGER NOT NULL)
                  ''')
-    
+    try:
+        conn.execute("ALTER TABLE menus ADD COLUMN photo TEXT DEFAULT 'default.png'")
+    except Exception:
+        pass
 
     conn.execute('''CREATE TABLE IF NOT EXISTS beverages(
                  id INTEGER PRIMARY KEY AUTOINCREMENT,

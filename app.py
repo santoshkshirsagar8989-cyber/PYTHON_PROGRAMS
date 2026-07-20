@@ -1,5 +1,4 @@
 import os
-
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 from flask.cli import load_dotenv
 from groq import Groq
@@ -7,14 +6,23 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from database import get_db as get_db_menus, init_db as init_db_menus
 from database1 import get_db as get_db_orders, init_db as init_db_orders
 from userdatabase import get_db as get_db_user, init_db as init_db_user
+import os
+from werkzeug.utils import secure_filename
 
 load_dotenv()  # Load environment variables from .env file
 
 app = Flask(__name__)
 app.secret_key = 'project2026'
 
-items=[]
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+items=[]
 Menus = [
     { "SELECT * FROM menus ORDER BY price DESC" }
 ]
@@ -128,6 +136,7 @@ def menu():
     conn.close()
     return render_template('menu.html', menus=menus)
 
+
 @app.route('/add_item', methods=['GET', 'POST'])
 def add_item():
     if session.get('role') != 'employee':
@@ -141,9 +150,19 @@ def add_item():
         if not name or not price :
             flash('please provide both name ans price','danger')
             return render_template("add_item.html")
+        
+        # Add photo
+        file = request.files.get('photo')
+        filename = 'default.png'
+        if file and file.filename and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        elif not os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'], filename)):
+            filename = 'icon.png'
+
         conn = get_db_menus()
-        conn.execute(''' INSERT INTO menus(name,price) VALUES(?,?)''',
-                    (name,price)
+        conn.execute(''' INSERT INTO menus(name,price,photo) VALUES(?,?,?)''',
+                    (name,price,filename)
                     )
         
         conn.commit()
