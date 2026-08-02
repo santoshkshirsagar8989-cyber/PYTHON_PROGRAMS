@@ -22,9 +22,14 @@ def init_db():
                  name TEXT NOT NULL,
                  quantity INTEGER NOT NULL,
                  price INTEGER NOT NULL,
-                 place TEXT NOT NULL)
+                 place TEXT NOT NULL,
+                 customer_name TEXT)
                  ''')
-    
+
+    columns = [row[1] for row in conn.execute('PRAGMA table_info(allorder)').fetchall()]
+    if 'customer_name' not in columns:
+        conn.execute('ALTER TABLE allorder ADD COLUMN customer_name TEXT')
+
     conn.commit()
     conn.close()
 

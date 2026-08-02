@@ -160,6 +160,7 @@
           </tr>
         </tbody>
       </table>
+
       <!-- AI Tips Box -->
       <div class="ai-tips-box">
         <div class="ai-tips-content">
@@ -185,10 +186,12 @@
   <div class="text-center mt-4">
     <a href="{{ url_for('order') }}" class="btn btn-secondary-custom btn-lg px-4">← Back to Orders</a>
   </div>
+  {% if order %}
     <div class="text-center mt-4">
         <form action="{{ url_for('cancel_order', order_id=order.id) }}" method="post" class="d-inline">
             <button type="submit" class="btn btn-danger btn-lg px-4" onclick="return confirm('Are you sure you want to cancel this order?')">❌ Cancel Order</button>
         </form>
     </div>
+  {% endif %}
 </div>
 {% endblock %}

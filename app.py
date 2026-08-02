@@ -45,6 +45,7 @@ def order():
         flash(f"please login first", 'danger')
         return redirect(url_for('login'))
 
+
     if request.method == 'POST':
         name = request.form.get('name')
         price = request.form.get('price')
@@ -55,10 +56,10 @@ def order():
             flash('please provide both name ans price','danger')
             return render_template("order.html")
         conn = get_db_orders()
-        conn.execute(''' INSERT INTO allorder(name,price,quantity,place) VALUES(?,?,?,?)''',
-                    (name,price,quantity,place)
+        conn.execute(''' INSERT INTO allorder(name,price,quantity,place,customer_name) VALUES(?,?,?,?,?)''',
+                    (name,price,quantity,place,session['name'])
                     )
-        
+
         conn.commit()
         conn.close()
 
@@ -66,7 +67,7 @@ def order():
         return redirect(url_for('order'))
     
     conn = get_db_orders()
-    items = conn.execute('SELECT * FROM allorder').fetchall()
+    items = conn.execute('SELECT * FROM allorder WHERE customer_name = ? ORDER BY id DESC', (session['name'],)).fetchall()
     conn.close()
     return render_template('order.html', items=items)
 
@@ -101,7 +102,7 @@ def order_deatil(order_id):
         return redirect(url_for('login'))
 
     conn = get_db_orders()
-    order = conn.execute('SELECT * FROM allorder WHERE id = ?', (order_id,)).fetchone()
+    order = conn.execute('SELECT * FROM allorder WHERE id = ? AND customer_name = ?', (order_id, session['name'])).fetchone()
     conn.close()
 
     if not order:
@@ -117,10 +118,10 @@ def cancel_order(order_id):
         return redirect(url_for('login'))
 
     conn = get_db_orders()
-    order = conn.execute('SELECT id FROM allorder WHERE id = ?', (order_id,)).fetchall()
+    order = conn.execute('SELECT id FROM allorder WHERE id = ? AND customer_name = ?', (order_id, session['name'])).fetchall()
 
     if order:
-        conn.execute('DELETE FROM allorder WHERE id = ?', (order_id,))
+        conn.execute('DELETE FROM allorder WHERE id = ? AND customer_name = ?', (order_id, session['name']))
         conn.commit()
         flash('Order cancelled successfully', 'success')
     else:
