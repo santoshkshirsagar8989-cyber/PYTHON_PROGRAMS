@@ -132,10 +132,15 @@ def cancel_order(order_id):
 
 @app.route("/menu")
 def menu():
+    page=request.args.get('page', 1, type=int)
+    per_page=3
+    offset=(page-1)*per_page
     conn = get_db_menus()
-    menus = conn.execute('SELECT * FROM menus ORDER BY price DESC').fetchall()
+    menus = conn.execute('SELECT * FROM menus ORDER BY price DESC LIMIT ? OFFSET ?', (per_page, offset)).fetchall()
+    total_menus = conn.execute('SELECT COUNT(*) FROM menus').fetchone()[0]
+    total_pages = (total_menus + per_page - 1) // per_page
     conn.close()
-    return render_template('menu.html', menus=menus)
+    return render_template('menu.html', menus=menus, total_pages=total_pages, current_page=page)
 
 
 @app.route('/add_item', methods=['GET', 'POST'])
