@@ -208,8 +208,15 @@ def search():
 def register():
     if request.method == 'POST':
         username = request.form['username'].strip()
-        password = request.form['password']
+        if not username:
+            flash('username empty', 'danger')
+            return render_template('register.html')
         
+        password = request.form['password']
+        if not password:
+            flash('password empty', 'danger')
+            return render_template('register.html')
+
         conn = get_db_user()
         # Check if username already exists
         existing = conn.execute('SELECT * FROM userinfo WHERE name = ?', (username,)).fetchone()
