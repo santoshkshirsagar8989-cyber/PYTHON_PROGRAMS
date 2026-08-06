@@ -46,12 +46,12 @@
         }
 
         .navbar {
-            background: rgba(15, 23, 42, 0.88);
+            background: rgba(15, 23, 42, 0.94);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 30px 60px rgba(15, 23, 42, 0.16);
-            border-radius: 1.5rem;
-            margin: 1rem 0;
+            border-radius: 0;
+            margin: 0;
         }
 
         .navbar-brand,
@@ -95,18 +95,146 @@
 
         .navbar-toggler {
             border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 1rem;
+            border-radius: 0.5rem;
         }
 
         .navbar-toggler-icon {
             filter: invert(1);
         }
 
-        .nav-divider {
-            width: 2px;
-            height: 2rem;
-            background: rgba(255, 255, 255, 0.12);
-            margin: 0 1rem;
+        .theme-toggle-btn {
+            border-radius: 1rem;
+            padding: 0.45rem 0.9rem;
+            font-size: 0.85rem;
+            min-width: 3.5rem;
+        }
+
+        .theme-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.14);
+            color: #fff;
+        }
+
+        .theme-dark {
+            --bg: #0f172a;
+            --surface: rgba(15, 23, 42, 0.94);
+            --surface-strong: rgba(15, 23, 42, 0.98);
+            --text: #e2e8f0;
+            --muted: #cbd5e1;
+            --primary: #60a5fa;
+            --primary-dark: #3b82f6;
+            --accent: #34d399;
+            --accent-soft: rgba(56, 189, 248, 0.16);
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .theme-dark body {
+            background: linear-gradient(180deg, #111827 0%, #0f172a 100%);
+            color: #e2e8f0;
+        }
+
+        .theme-dark .navbar {
+            background: rgba(15, 23, 42, 0.96);
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .theme-dark .content-card,
+        .theme-dark .panel-card,
+        .theme-dark .glass-card {
+            background: rgba(15, 23, 42, 0.82);
+            border-color: rgba(255, 255, 255, 0.06);
+            color: #e2e8f0;
+        }
+
+        .theme-dark .form-control,
+        .theme-dark .form-select {
+            background: rgba(15, 23, 42, 0.9);
+            color: #e2e8f0;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-dark .form-control::placeholder,
+        .theme-dark .form-select option {
+            color: rgba(226, 232, 240, 0.6);
+        }
+
+        .theme-dark .form-control:focus,
+        .theme-dark .form-select:focus {
+            box-shadow: 0 0 0 0.15rem rgba(96, 165, 250, 0.18);
+        }
+
+        .theme-dark .navbar-brand,
+        .theme-dark .nav-link,
+        .theme-dark .navbar-toggler-icon,
+        .theme-dark .footer-shell,
+        .theme-dark .footer-shell a,
+        .theme-dark .theme-toggle-btn {
+            color: #e2e8f0 !important;
+        }
+
+        .theme-dark .theme-toggle-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.14);
+        }
+
+        .theme-dark .theme-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        .theme-dark .btn-soft {
+            background: rgba(255, 255, 255, 0.08);
+            color: #e2e8f0;
+            border-color: rgba(255, 255, 255, 0.16);
+        }
+
+        .theme-dark .btn-soft:hover {
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        .theme-dark .text-dark,
+        .theme-dark .text-black {
+            color: #f8fafc !important;
+        }
+
+        .theme-dark .text-muted {
+            color: rgba(226, 232, 240, 0.7) !important;
+        }
+
+        .theme-dark .bg-white,
+        .theme-dark .bg-light {
+            background: rgba(255, 255, 255, 0.08) !important;
+            color: #e2e8f0 !important;
+        }
+
+        .theme-dark .bg-primary {
+            background-color: #2563eb !important;
+            color: #fff !important;
+        }
+
+        .theme-dark .bg-success {
+            background-color: #10b981 !important;
+            color: #fff !important;
+        }
+
+        .theme-dark .input-group-text {
+            background: rgba(255, 255, 255, 0.08) !important;
+            color: #e2e8f0 !important;
+            border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+
+        .theme-dark .navbar .form-control {
+            background: rgba(255, 255, 255, 0.10) !important;
+            color: #e2e8f0 !important;
+            border-color: rgba(255, 255, 255, 0.16) !important;
+        }
+
+        .theme-dark .navbar .form-control::placeholder {
+            color: rgba(226, 232, 240, 0.7) !important;
+        }
+
+        .theme-dark .badge.bg-primary,
+        .theme-dark .badge.bg-success {
+            opacity: 0.95;
         }
 
         .navbar-collapse {
@@ -454,7 +582,7 @@
         }
     </style>
 </head>
-<body>
+<body class="fw-bold">
     <div class="main-wrapper">
         <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
             <div class="container">
@@ -481,9 +609,10 @@
                         <li class="nav-item"><a class="nav-link px-3" href="{{ url_for('login') }}">Login</a></li>
                         {% endif %}
                     </ul>
-                    <form class="d-flex align-items-center mt-3 mt-lg-0" action="{{ url_for('search') }}" method="GET">
+                    <form class="d-flex align-items-center gap-2 mt-3 mt-lg-0" action="{{ url_for('search') }}" method="GET">
                         <input class="form-control form-control-sm me-2" type="search" placeholder="Search menu" name="q">
                         <button class="btn btn-outline-light btn-sm" type="submit">Search</button>
+                        <button class="btn btn-soft btn-sm theme-toggle-btn" id="themeToggle" type="button">🌙</button>
                     </form>
                 </div>
             </div>
@@ -546,5 +675,32 @@
         </footer>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlRoot = document.documentElement;
+        const storedTheme = localStorage.getItem('theme');
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                htmlRoot.classList.add('theme-dark');
+                htmlRoot.classList.remove('theme-light');
+                themeToggle.textContent = '☀️';
+                themeToggle.title = 'Switch to light theme';
+            } else {
+                htmlRoot.classList.remove('theme-dark');
+                htmlRoot.classList.add('theme-light');
+                themeToggle.textContent = '🌙';
+                themeToggle.title = 'Switch to dark theme';
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        const initialTheme = storedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        setTheme(initialTheme);
+
+        themeToggle.addEventListener('click', () => {
+            setTheme(htmlRoot.classList.contains('theme-dark') ? 'light' : 'dark');
+        });
+    </script>
 </body>
 </html>
