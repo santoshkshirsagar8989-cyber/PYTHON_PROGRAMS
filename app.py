@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 from flask.cli import load_dotenv
 from groq import Groq
@@ -6,7 +7,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from database import get_db as get_db_menus, init_db as init_db_menus
 from database1 import get_db as get_db_orders, init_db as init_db_orders
 from userdatabase import get_db as get_db_user, init_db as init_db_user
-import os
 from werkzeug.utils import secure_filename
 
 load_dotenv()  # Load environment variables from .env file
@@ -17,6 +17,13 @@ app.secret_key = 'project2026'
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+@app.context_processor
+def inject_footer_context():
+    return {
+        'current_year': datetime.now().year,
+        'support_email': 'support@collegecanteen.example'
+    }
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 def allowed_file(filename):

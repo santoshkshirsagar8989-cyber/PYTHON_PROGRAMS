@@ -1,197 +1,53 @@
 {% extends "base.html" %}
-{% block title %}Order Detail{% endblock %}
+{% block title %}Order Details{% endblock %}
 
 {% block content %}
-<style>
-  .order-page {
-    background: linear-gradient(135deg, #fff8f2 0%, #f4f8ff 100%);
-    border-radius: 24px;
-    padding: 28px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  }
+<div class="row g-4">
+    <div class="col-lg-7">
+        <div class="card panel-card p-4 card-hover h-100">
+            <div class="decorative-line mb-3"></div>
+            <h2 class="h4 mb-4">Order details</h2>
+            <dl class="row g-3">
+                <dt class="col-sm-4 text-muted">Item</dt>
+                <dd class="col-sm-8 fw-semibold">{{ order.name }}</dd>
 
-  .hero-card {
-    background: linear-gradient(135deg, #1f3c88 0%, #4a90e2 100%);
-    color: white;
-    border: none;
-    border-radius: 20px;
-  }
+                <dt class="col-sm-4 text-muted">Price</dt>
+                <dd class="col-sm-8">₹{{ order.price }}</dd>
 
-  .table-card {
-    border: none;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  }
+                <dt class="col-sm-4 text-muted">Quantity</dt>
+                <dd class="col-sm-8">{{ order.quantity }}</dd>
 
-  .btn-secondary-custom {
-    background: linear-gradient(135deg, #198754 0%, #20c997 100%);
-    color: white;
-    border: none;
-  }
+                <dt class="col-sm-4 text-muted">Total</dt>
+                <dd class="col-sm-8 fw-semibold">₹{{ (order.price|float) * (order.quantity|int) }}</dd>
 
-  .ai-tips-box {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 16px;
-    padding: 20px;
-    margin-top: 24px;
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .ai-tips-box::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 200px;
-    height: 200px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    animation: float 6s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0px) translateX(0px); }
-    50% { transform: translateY(-20px) translateX(20px); }
-  }
-
-  .ai-tips-content {
-    position: relative;
-    z-index: 1;
-    color: white;
-  }
-
-  .ai-tips-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-  }
-
-  .ai-tips-icon {
-    font-size: 24px;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-  }
-
-  .ai-tips-text {
-    font-size: 15px;
-    line-height: 1.6;
-    opacity: 0.95;
-    margin-bottom: 16px;
-  }
-
-  .ai-tips-box .btn-primary {
-    background: rgba(255, 255, 255, 0.25);
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    color: white;
-    font-weight: 600;
-    transition: all 0.3s ease;
-  }
-
-  .ai-tips-box .btn-primary:hover {
-    background: rgba(255, 255, 255, 0.4);
-    border-color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  }
-
-  .ai-tips-alert {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    border-radius: 12px;
-    padding: 14px;
-    font-size: 15px;
-    line-height: 1.5;
-  }
-</style>
-
-<div class="order-page">
-  <div class="card hero-card shadow-sm mb-4">
-    <div class="card-body text-center py-5">
-      <h1 class="fw-bold mb-2">📋 Order Details</h1>
-      <p class="mb-0 fs-5">Here is the order you selected.</p>
-    </div>
-  </div>
-
-  <div class="card table-card mb-4">
-    <div class="card-body card-hover">
-      <table class="table table-hover mb-0 align-middle">
-        <tbody>
-          <tr>
-            <th class="fw-semibold">📦 Item Name</th>
-            <td>{{ order.name }}</td>
-          </tr>
-          <tr>
-            <th class="fw-semibold">� Item Photo</th>
-            <td>
-              <img src="{{ url_for('static', filename='uploads/' ~ (order.photo if order.photo and order.photo not in ['defult.png', 'default.png'] else 'icon.png')) }}"
-                   alt="{{ order.name }}"
-                   class="img-fluid rounded"
-                   style="max-height: 40px; max-width: 120px; object-fit:cover;">
-            </td>
-          </tr>
-          <tr>
-            <th class="fw-semibold">💲 Price</th>
-            <td>{{ order.price }}</td>
-          </tr>
-          <tr>
-            <th class="fw-semibold">🔢 Quantity</th>
-            <td>{{ order.quantity }}</td>
-          </tr>
-          <tr>
-            <th class="fw-semibold">✅ Total</th>
-            <td>{{ (order.price|float) * (order.quantity|int) }}</td>
-          </tr>
-          <tr>
-            <th class="fw-semibold">📍 Place</th>
-            <td>{{ order.place }}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- AI Tips Box -->
-      <div class="ai-tips-box">
-        <div class="ai-tips-content">
-          <div class="ai-tips-header">
-            <span class="ai-tips-icon">✨</span>
-            <span>AI Tips & Insights</span>
-          </div>
-          {% if tip %}
-            <div class="ai-tips-text ai-tips-alert">
-              {{ tip }}
-            </div>
-          {% else %}
-            <p class="ai-tips-text mb-0">Get personalized AI-powered tips for this order!</p>
-            <a href="{{ url_for('get_ai_tip', id=order.id) }}" class="btn btn-primary btn-sm">
-              🤖 Generate AI Tip
-            </a>
-          {% endif %}
+                <dt class="col-sm-4 text-muted">Place</dt>
+                <dd class="col-sm-8">{{ order.place }}</dd>
+            </dl>
         </div>
-      </div>
     </div>
-  </div>
 
-  <div class="text-center mt-4">
-    <a href="{{ url_for('order') }}" class="btn btn-secondary-custom btn-lg px-4">← Back to Orders</a>
-  </div>
-  {% if order %}
-    <div class="text-center mt-4">
-        <form action="{{ url_for('cancel_order', order_id=order.id) }}" method="post" class="d-inline">
-            <button type="submit" class="btn btn-danger btn-lg px-4" onclick="return confirm('Are you sure you want to cancel this order?')">❌ Cancel Order</button>
-        </form>
+    <div class="col-lg-5">
+        <div class="card panel-card p-4 card-hover h-100">
+            <div class="decorative-line mb-3"></div>
+            <h3 class="h5 mb-3">AI insights</h3>
+            {% if tip %}
+            <div class="border rounded-4 p-4 bg-primary text-white">
+                <p class="mb-0">{{ tip }}</p>
+            </div>
+            {% else %}
+            <p class="text-muted">Generate a quick AI health check for this order.</p>
+            <a href="{{ url_for('get_ai_tip', id=order.id) }}" class="btn btn-brand w-100">Generate AI Tip</a>
+            {% endif %}
+
+            <div class="mt-4">
+                <a href="{{ url_for('order') }}" class="btn btn-soft w-100 mb-2">Back to orders</a>
+                {% if order %}
+                <form action="{{ url_for('cancel_order', order_id=order.id) }}" method="post">
+                    <button type="submit" class="btn btn-danger w-100">Cancel order</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
     </div>
-  {% endif %}
 </div>
 {% endblock %}

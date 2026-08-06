@@ -6,102 +6,146 @@
     <title>{% block title %}College Canteen{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        :root {
+            --bg: #eef2ff;
+            --surface: rgba(255, 255, 255, 0.92);
+            --surface-strong: rgba(248, 250, 252, 0.98);
+            --text: #0f172a;
+            --muted: #475569;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --accent: #0d9488;
+            --accent-soft: rgba(16, 185, 129, 0.12);
+            --radius: 1.75rem;
+            --shadow: 0 30px 90px rgba(15, 23, 42, 0.12);
+        }
 
-        html, body {
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
             min-height: 100%;
         }
 
         body {
             margin: 0;
-            background: linear-gradient(135deg, #7876a794 0%, #dd63129d 100%);
-            color: #1d2540;
+            background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 14%),
+                        radial-gradient(circle at right, rgba(16, 185, 129, 0.14), transparent 16%),
+                        linear-gradient(180deg, #eef2ff 0%, #e2e8f0 100%);
+            color: var(--text);
             font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
+            background-attachment: fixed;
         }
 
-        .page-shell {
-            flex: 1 0 auto;
-            min-height: 0;
-            overflow-x: hidden;
+        .main-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .navbar {
-            min-height: 72px;
-            background: linear-gradient(135deg, #1e3a61 0%, #1da386 100%);
+            background: rgba(15, 23, 42, 0.88);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.16);
+            border-radius: 1.5rem;
+            margin: 1rem 0;
         }
 
         .navbar-brand,
         .nav-link,
         .navbar-toggler-icon {
-            color: #ffffff !important;
+            color: #f8fafc !important;
+        }
+
+        .navbar-brand {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+        }
+
+        .navbar-brand span {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: rgba(248, 250, 252, 0.72);
+            letter-spacing: 0.02em;
+        }
+
+        .navbar-nav {
+            gap: 0.6rem;
         }
 
         .nav-link {
             font-size: 0.95rem;
-            font-weight: 500;
+            font-weight: 600;
+            border-radius: 999px;
+            padding: 0.55rem 1rem;
+            transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease;
         }
 
-        .nav-link:hover,
-        .navbar-brand:hover {
-            color: #da87ce8c !important;
+        .nav-link.active,
+        .nav-link:hover {
+            color: #fff !important;
+            background: rgba(96, 165, 250, 0.16);
+            transform: translateY(-1px);
+        }
+
+        .navbar-toggler {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1rem;
+        }
+
+        .navbar-toggler-icon {
+            filter: invert(1);
+        }
+
+        .nav-divider {
+            width: 2px;
+            height: 2rem;
+            background: rgba(255, 255, 255, 0.12);
+            margin: 0 1rem;
+        }
+
+        .navbar-collapse {
+            align-items: center;
         }
 
         .navbar .form-control {
+            min-width: 210px;
             background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #f8fafc;
         }
 
         .navbar .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.78);
+            color: rgba(248, 250, 252, 0.75);
         }
 
         .navbar .form-control:focus {
+            background: rgba(255, 255, 255, 0.18);
             box-shadow: none;
-            border-color: rgba(255, 255, 255, 0.315);
+            border-color: rgba(255, 255, 255, 0.32);
+            color: #fff;
         }
 
-        .btn-brand {
-            background-color: var(--brand);
-            color: white;
-            border: none;
+        .page-shell {
+            flex: 1;
         }
 
-        .btn-brand:hover {
-            color: white;
-        }
-
-        .hero-section {
-            background: linear-gradient(135deg, #1f3c88 0%, #4a90e2 100%);
-            color: white;
-            border-radius: 18px;
-            padding: 2rem 1.75rem;
-            margin-bottom: 1.75rem;
-        }
-
-        .hero-title {
-            font-size: clamp(2rem, 2.5vw, 3rem);
-            line-height: 1.05;
-        }
-
-        .hero-subtitle {
-            color: rgba(238, 225, 225, 0.9);
+        .page-content {
+            padding: 2.5rem 0;
         }
 
         .content-card {
-            border: none;
-            border-radius: 20px;
-            background: white;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .content-card .card-body {
-            padding: 1.75rem;
+            background: var(--surface);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            backdrop-filter: blur(12px);
         }
 
         .card-hover {
@@ -110,126 +154,397 @@
 
         .card-hover:hover {
             transform: translateY(-6px);
-            box-shadow: 0 22px 40px rgba(0, 0, 0, 0.16);
-            border-color: rgba(0, 0, 0, 0.18);
+            box-shadow: 0 34px 90px rgba(15, 23, 42, 0.16);
+        }
+
+        .hero-panel {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.16), rgba(16, 185, 129, 0.10));
+            border-radius: calc(var(--radius) * 1.1);
+            padding: 3rem;
+            border: 1px solid rgba(59, 130, 246, 0.14);
+            box-shadow: 0 40px 90px rgba(15, 23, 42, 0.14);
+        }
+
+        .hero-panel::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -15%;
+            width: 260px;
+            height: 260px;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 50%;
+            filter: blur(12px);
+        }
+
+        .hero-panel::after {
+            content: '';
+            position: absolute;
+            bottom: -22%;
+            left: -10%;
+            width: 220px;
+            height: 220px;
+            background: rgba(16, 185, 129, 0.14);
+            border-radius: 50%;
+            filter: blur(18px);
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            font-size: clamp(1.9rem, 2.3vw, 2.4rem);
+            font-weight: 800;
+        }
+
+        .section-heading p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .panel-card {
+            background: var(--surface);
+            border: 1px solid rgba(59, 130, 246, 0.12);
+            border-radius: 2rem;
+            box-shadow: 0 24px 64px rgba(15, 23, 42, 0.09);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            overflow: hidden;
+        }
+
+        .panel-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 30px 90px rgba(15, 23, 42, 0.16);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            box-shadow: 0 24px 54px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(18px);
+            border-radius: 1.75rem;
+        }
+
+        .badge-ghost {
+            background: rgba(255, 255, 255, 0.72);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+        }
+
+        .feature-card {
+            border-radius: 1.75rem;
+            padding: 2rem;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.08), rgba(37, 99, 235, 0.02));
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .btn-brand {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: #fff;
+            border: none;
+            box-shadow: 0 14px 30px rgba(37, 99, 235, 0.18);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+        }
+
+        .btn-brand:hover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #0f766e 100%);
+            color: #fff;
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 18px 34px rgba(37, 99, 235, 0.24);
+            filter: brightness(1.05);
+        }
+
+        .btn-soft {
+            background: rgba(59, 130, 246, 0.08);
+            color: #1d4ed8;
+            border: 1px solid rgba(59, 130, 246, 0.16);
+            transition: background 0.18s ease, transform 0.18s ease, color 0.18s ease;
+        }
+
+        .btn-soft:hover {
+            background: rgba(59, 130, 246, 0.18);
+            transform: translateY(-1px);
+            color: var(--primary-dark);
+        }
+
+        .btn {
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+        }
+
+        .page-link,
+        .pagination .page-link {
+            transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+            cursor: pointer;
+        }
+
+        .page-link:hover {
+            background: rgba(37, 99, 235, 0.08);
+            color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .card-hover,
+        .panel-card,
+        .glass-card,
+        .content-card {
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+            will-change: transform, box-shadow, border-color, background;
+        }
+
+        .card-hover:hover,
+        .panel-card:hover,
+        .glass-card:hover,
+        .content-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 40px 100px rgba(15, 23, 42, 0.18);
+            border-color: rgba(37, 99, 235, 0.18);
+        }
+
+        .table-responsive .table tbody tr {
+            transition: background 0.18s ease, transform 0.18s ease;
+        }
+
+        .table-responsive .table tbody tr:hover {
+            background: rgba(37, 99, 235, 0.06);
+            transform: translateX(1px);
+        }
+
+        .table-responsive .table thead th,
+        .table-responsive .table tbody td,
+        .table-responsive .table tbody th {
+            transition: background 0.18s ease, color 0.18s ease;
+        }
+
+        .live-pulse {
+            animation: live-breathe 8s ease-in-out infinite;
+        }
+
+        @keyframes live-breathe {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-4px); opacity: 0.98; }
+        }
+
+        .live-pulse {
+            animation: live-breathe 8s ease-in-out infinite;
+        }
+
+        @keyframes live-breathe {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-4px); opacity: 0.98; }
+        }
+
+        .outline-panel {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(59, 130, 246, 0.10);
+            border-radius: 1.75rem;
+            padding: 1.75rem;
+        }
+
+        .decorative-line {
+            height: 4px;
+            width: 72px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 999px;
+            margin-bottom: 1rem;
+        }
+
+        .text-glow {
+            text-shadow: 0 6px 24px rgba(37, 99, 235, 0.1);
+        }
+
+        .table thead th {
+            background: rgba(37, 99, 235, 0.08);
+        }
+
+        .table tbody tr:hover {
+            background: rgba(37, 99, 235, 0.04);
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 1rem;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: rgba(37, 99, 235, 0.35);
+            box-shadow: 0 0 0 0.15rem rgba(37, 99, 235, 0.12);
         }
 
         .footer-shell {
-            flex-shrink: 0;
-            background-color: var(--brand);
-            color: white;
-            text-align: center;
-            padding: 1rem 0;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.92));
+            color: #e2e8f0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 2.5rem 0 1.5rem;
+            font-size: 0.95rem;
         }
 
-        .footer-shell small {
-            opacity: 0.88;
+        .footer-shell a {
+            color: rgba(248, 250, 252, 0.85);
+            text-decoration: none;
         }
 
-        :root {
-            --brand: #0d6e94;
+        .footer-shell a:hover {
+            color: #7dd3fc;
+            text-decoration: underline;
         }
-        .alert {
-            border-radius: 0.85rem;
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 2rem;
+            align-items: start;
+            padding-bottom: 1rem;
+        }
+
+        .footer-title {
+            font-weight: 700;
+            margin-bottom: 0.9rem;
+            letter-spacing: 0.03em;
+        }
+
+        .footer-note {
+            color: rgba(226, 232, 240, 0.78);
+        }
+
+        .footer-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-meta small {
+            color: rgba(226, 232, 240, 0.72);
+        }
+
+        .footer-meta a {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        @media (max-width: 991px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .navbar .form-control {
+                min-width: 140px;
+            }
+
+            .page-content {
+                padding: 1.5rem 0;
+            }
+
+            .hero-panel {
+                padding: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
-        <div class="container ">
-            <a class="navbar-brand fw-bold fs-5" href="{{ url_for('home') }}">🍕 College Canteen</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="{{ url_for('menu') }}">🍽 Menu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="{{ url_for('beverages') }}">🥤 Beverages</a>
-                    </li>
-                    {% if session.role == 'employee' %}
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="{{ url_for('add_item') }}">+ Add Item</a>
-                    </li>
-                    {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="{{ url_for('order') }}">🍔 Order</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-3" href="{{ url_for('about') }}">📍 About</a>
-                    </li>
-                    <li class="nav-item">
-                        <form class="d-flex align-items-center ms-3 mt-3 mt-lg-0" action="{{ url_for('search') }}" method="GET">
-                            <input class="form-control form-control-sm me-2" style="width: 150px;" type="search" placeholder="Search" name="q">
-                            <button class="btn btn-outline-light btn-sm" type="submit">Search</button>
-                        </form>
-                    </li>
-                    {% if session.name %}
-                    <li class="nav-item">
-                        <span class="nav-link px-2 py-1 text-white">👤 {{ session.name }}</span>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-2 py-1" href="{{ url_for('logout') }}">🔓 Logout</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link px-2 py-1" href="{{ url_for('login') }}">🔒 Login</a>
-                    </li>
-                    {% endif %}
-                </ul>
+    <div class="main-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-bold fs-5" href="{{ url_for('home') }}">
+                    College Canteen
+                    <span>Campus dining reimagined</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                        <li class="nav-item"><a class="nav-link px-3" href="{{ url_for('menu') }}">Menu</a></li>
+                        <li class="nav-item"><a class="nav-link px-3" href="{{ url_for('beverages') }}">Beverages</a></li>
+                        {% if session.role == 'employee' %}
+                        <li class="nav-item"><a class="nav-link px-3" href="{{ url_for('add_item') }}">Add Item</a></li>
+                        {% endif %}
+                        <li class="nav-item"><a class="nav-link px-3" href="{{ url_for('order') }}">Order</a></li>
+                        <li class="nav-item"><a class="nav-link px-3" href="{{ url_for('about') }}">About</a></li>
+                        {% if session.name %}
+                        <li class="nav-item"><span class="nav-link px-3 text-white">Hi, {{ session.name }}</span></li>
+                        <li class="nav-item"><a class="nav-link px-3" href="{{ url_for('logout') }}">Logout</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link px-3" href="{{ url_for('login') }}">Login</a></li>
+                        {% endif %}
+                    </ul>
+                    <form class="d-flex align-items-center mt-3 mt-lg-0" action="{{ url_for('search') }}" method="GET">
+                        <input class="form-control form-control-sm me-2" type="search" placeholder="Search menu" name="q">
+                        <button class="btn btn-outline-light btn-sm" type="submit">Search</button>
+                    </form>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <main class="page-shell">
-        <div class="container mt-4 mb-5">
-            <div class="hero-section text-center mx-auto" style="max-width: 980px;">
-                <h1 class="hero-title fw-bold mb-3">Welcome to the College Canteen</h1>
-                <p class="hero-subtitle fs-5 mb-0">Enjoy a smoother ordering experience with modern styling, quick actions, and responsive layout.</p>
-            </div>
-
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <main class="page-shell">
+            <div class="container page-content">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div class="row justify-content-center mb-4">
+                    <div class="col-lg-10">
+                        {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show rounded-4 shadow-sm" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+
+                <div class="content-card p-4 p-lg-5">
+                    {% block content %}{% endblock %}
                 </div>
             </div>
-            {% endif %}
-            {% endwith %}
+        </main>
 
-            <div class="content-card mt-4">
-                <div class="card-body">
-                    {% block content %}
-                    {% endblock %}
+        <footer class="footer-shell">
+            <div class="container">
+                <div class="footer-grid">
+                    <div>
+                        <h5 class="footer-title">College Canteen</h5>
+                        <p class="footer-note">A polished campus dining experience with fast menu browsing, secure orders, and employee item management.</p>
+                    </div>
+                    <div>
+                        <h5 class="footer-title">Quick links</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li><a href="{{ url_for('home') }}">Home</a></li>
+                            <li><a href="{{ url_for('menu') }}">Menu</a></li>
+                            <li><a href="{{ url_for('order') }}">Order</a></li>
+                            <li><a href="{{ url_for('about') }}">About</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="footer-title">Contact</h5>
+                        <p class="footer-note mb-1">Need help? Reach out for support or employee access.</p>
+                        <p class="mb-0"><a href="mailto:support@collegecanteen.example">support@collegecanteen.example</a></p>
+                    </div>
+                </div>
+                <div class="footer-meta">
+                    <small>© {{ current_year }} College Canteen</small>
+                    <div>
+                        <a href="{{ url_for('beverages') }}">Beverages</a>
+                        <span class="mx-2 text-white-50">•</span>
+                        <a href="{{ url_for('register') }}">Register</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.alert').forEach(function (alertEl) {
-                setTimeout(function () {
-                    alertEl.classList.remove('show');
-                    setTimeout(function () {
-                        alertEl.remove();
-                    }, 150);
-                }, 3000);
-            });
-        });
-    </script>
-
+        </footer>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
-
-    <footer class="footer-shell">
-        <small>🎓 College Canteen | Built with Python + Flask + Bootstrap | Projected by Santosh Kshirsagar</small>
-    </footer>
 </body>
 </html>

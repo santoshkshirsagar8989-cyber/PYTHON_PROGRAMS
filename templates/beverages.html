@@ -1,17 +1,26 @@
 {% extends "base.html" %}
-{% block title %} Beverages {% endblock %}
+{% block title %}Beverages{% endblock %}
 
 {% block content %}
-<h2 class="fw-bold" mb-4>Choose Your Beverage</h2>
-    <div class="row">
-        {% for row in rows %}
-        <div class="col-md-3 mb-3">
-            <div class="card shadow text-center p-3 card-hover">
-                <h2 class="fw-bold" >{{ row['beverage_count'] }}</h2>
-                <p class="fw-bold" style="color:rgba(212, 8, 53, 0.897)">{{ row['beverage_name'] }}</p>
-            </div>
+<div class="section-heading mb-4">
+    <div>
+        <div class="decorative-line"></div>
+        <h2 class="mb-1">Beverages</h2>
+        <p class="text-muted mb-0">Enjoy a refreshing selection of drinks available in the canteen.</p>
+    </div>
+    <a href="{{ url_for('menu') }}" class="btn btn-soft">Back to menu</a>
+</div>
+
+<div class="row g-4">
+    {% for row in rows %}
+    <div class="col-sm-6 col-xl-3">
+        <div class="card panel-card shadow-sm card-hover p-4 text-center h-100">
+            <div class="decorative-line mx-auto mb-3"></div>
+            <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2 mb-3">{{ row['beverage_count'] }}</span>
+            <h3 class="h5 fw-semibold">{{ row['beverage_name'] }}</h3>
+            <p class="text-muted mt-2">Popular beverage choice for campus life.</p>
         </div>
     </div>
     {% endfor %}
-
+</div>
 {% endblock %}

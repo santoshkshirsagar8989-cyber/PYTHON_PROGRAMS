@@ -1,80 +1,79 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
 {% block content %}
-<style>
-  .home-page {
-    background: linear-gradient(135deg, #fff8f2 0%, #f4f8ff 100%);
-    border-radius: 24px;
-    padding: 28px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  }
-
-  .hero-card {
-    background: linear-gradient(135deg, #0d6efd 0%, #4f46e5 100%);
-    color: white;
-    border: none;
-    border-radius: 20px;
-  }
-
-  .feature-card {
-    border: none;
-    border-radius: 18px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .feature-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
-  }
-
-  .feature-btn {
-    border-radius: 999px;
-    padding: 10px 18px;
-  }
-</style>
-
-<div class="home-page">
-  <div class="card hero-card shadow-sm mb-4">
-    <div class="card-body text-center py-5">
-      <h1 class="fw-bold mb-3">🍴 Welcome to College Canteen</h1>
-      <p class="fs-4 fw-semibold fst-italic mb-0">Discover fresh meals, snacks, and drinks made just for campus life. Enjoy tasty favorites, fast service, and easy online ordering every day.</p>
-    </div>
+<div class="row g-4 align-items-stretch">
+  <div class="col-lg-7">
+    <section class="hero-panel text-dark position-relative overflow-hidden">
+      <span class="badge badge-ghost mb-3">Campus dining made modern</span>
+      <div class="decorative-line"></div>
+      <h1 class="display-6 fw-bold mb-3 text-glow">Order food faster, pay smarter, and enjoy every campus meal.</h1>
+      <p class="lead text-muted mb-4">The College Canteen app offers a polished ordering experience with menu browsing, employee item management, and fast order tracking.</p>
+      <div class="d-flex flex-wrap gap-3">
+        <a href="{{ url_for('menu') }}" class="btn btn-brand btn-lg">Browse Menu</a>
+        <a href="{{ url_for('order') }}" class="btn btn-soft btn-lg">Place Order</a>
+      </div>
+    </section>
   </div>
 
-  <div class="row justify-content-center g-4 text-center">
-    <div class="col-12 col-md-5">
-      <div class="card feature-card shadow border-primary bg-white h-100">
-        <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
-          <p class="fs-5 fw-bold text-primary">🍽️ Explore Our Menu</p>
-          <p class="text-muted">Browse delicious dishes and daily specials.</p>
-          <a href="{{ url_for('menu') }}" class="btn btn-outline-primary feature-btn mt-2">View Menu</a>
+  <div class="col-lg-5">
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="card panel-card p-4 card-hover">
+          <div class="decorative-line"></div>
+          <h3 class="h5 mb-2">Why choose College Canteen?</h3>
+          <p class="text-muted mb-0">A vibrant campus dining hub built to make every meal effortless and enjoyable.</p>
         </div>
       </div>
-    </div>
-
-    <div class="col-12 col-md-5">
-      <div class="card feature-card shadow border-success bg-white h-100">
-        <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
-          <p class="fs-5 fw-bold text-success">🚀 Order Your Meal</p>
-          <p class="text-muted">Place your order quickly and enjoy fast service.</p>
-          <a href="{{ url_for('order') }}" class="btn btn-outline-success feature-btn mt-2">Order Now</a>
+      <div class="col-6">
+        <div class="card panel-card p-4 card-hover">
+          <p class="fw-semibold mb-2">🍽 Fresh menu options</p>
+          <p class="text-muted mb-0">Explore curated meals and daily specials.</p>
         </div>
       </div>
-    </div>
-
-    <div class="col-12 col-md-5">
-      <div class="card feature-card shadow border-info bg-white h-100">
-        <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
-          <p class="fs-5 fw-bold text-info">ℹ️ Learn About Us</p>
-          <p class="text-muted">Know more about our canteen and mission.</p>
-          <a href="{{ url_for('about') }}" class="btn btn-outline-info feature-btn mt-2">Learn More</a>
+      <div class="col-6">
+        <div class="card panel-card p-4 card-hover">
+          <p class="fw-semibold mb-2">🔒 Secure login</p>
+          <p class="text-muted mb-0">Protect order data with secure authentication.</p>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card panel-card p-4 card-hover">
+          <p class="fw-semibold mb-2">🛒 Fast ordering</p>
+          <p class="text-muted mb-0">Add items quickly and review before checkout.</p>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card panel-card p-4 card-hover">
+          <p class="fw-semibold mb-2">👨‍🍳 Employee tools</p>
+          <p class="text-muted mb-0">Keep your menu fresh with fast item management.</p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<div class="row g-4 mt-4 text-center">
+  <div class="col-md-4">
+    <div class="card glass-card p-4 card-hover h-100">
+      <span class="badge bg-primary bg-opacity-10 text-primary mb-3">Instant access</span>
+      <h3 class="h5 fw-bold mb-2">Menu browsing</h3>
+      <p class="text-muted mb-0">Find meals, snacks, and drinks with ease.</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card glass-card p-4 card-hover h-100">
+      <span class="badge bg-success bg-opacity-10 text-success mb-3">Smooth flow</span>
+      <h3 class="h5 fw-bold mb-2">Order tracking</h3>
+      <p class="text-muted mb-0">Keep your orders visible and up to date.</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card glass-card p-4 card-hover h-100">
+      <span class="badge bg-info bg-opacity-10 text-info mb-3">Adaptive</span>
+      <h3 class="h5 fw-bold mb-2">Responsive design</h3>
+      <p class="text-muted mb-0">Works beautifully on every device.</p>
+    </div>
+  </div>
+</div>
 {% endblock %}

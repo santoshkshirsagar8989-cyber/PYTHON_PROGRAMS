@@ -1,70 +1,29 @@
 {% extends "base.html" %}
 {% block title %}Add Item{% endblock %}
+
 {% block content %}
-<style>
-  .add-item-page {
-    background: linear-gradient(135deg, #fff8f2 0%, #f4f8ff 100%);
-    border-radius: 24px;
-    padding: 28px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  }
-
-  .hero-card {
-    background: linear-gradient(135deg, #1f3c88 0%, #4a90e2 100%);
-    color: white;
-    border: none;
-    border-radius: 20px;
-  }
-
-  .form-card {
-    border: none;
-    border-radius: 20px;
-    background: linear-gradient(135deg, #ffffff 0%, #f9fbff 100%);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  }
-
-  .btn-custom {
-    background: linear-gradient(135deg, #ff7a00 0%, #ff4d6d 100%);
-    color: white;
-    border: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .btn-custom:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(255, 122, 0, 0.25);
-    color: white;
-  }
-</style>
-
-<div class="add-item-page">
-  <div class="card hero-card shadow-sm mb-4">
-    <div class="card-body text-center py-4">
-      <h1 class="fw-bold mb-2">➕ Add Menu Item</h1>
-      <p class="mb-0 fs-5">Create a new menu item so students can order it from the canteen.</p>
-    </div>
-  </div>
-
-  <div class="row justify-content-center">
+<div class="row justify-content-center">
     <div class="col-lg-6">
-      <div class="card form-card card-hover p-4">
-        <form action="{{ url_for('add_item') }}" method="POST" enctype="multipart/form-data">
-          <div class="mb-3">
-            <label class="form-label" for="name">Item Name</label>
-            <input id="name" name="name" class="form-control form-control-lg" placeholder="Add item" type="text" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="price">Item Price</label>
-            <input id="price" name="price" class="form-control form-control-lg" placeholder="Enter price" type="number" min="0" step="0.01" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label" for="photo">Item Photo</label>
-            <input id="photo" name="photo" class="form-control form-control-lg" type="file" accept="image/*">
-          </div>
-          <button type="submit" class="btn btn-custom btn-lg w-100">Add Item</button>
-        </form>
-      </div>
+        <div class="card panel-card shadow-sm card-hover p-4">
+            <div class="decorative-line mb-3"></div>
+            <h2 class="h4 fw-bold mb-3">Add a new menu item</h2>
+            <p class="text-muted mb-4">Create a colorful new dish for students to see and order.</p>
+            <form action="{{ url_for('add_item') }}" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">Item name</label>
+                    <input name="name" class="form-control" type="text" placeholder="Example: Paneer Wrap" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Price</label>
+                    <input name="price" class="form-control" type="number" min="0" step="0.01" placeholder="₹0.00" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Photo</label>
+                    <input name="photo" class="form-control" type="file" accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-brand w-100">Add item</button>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
 {% endblock %}

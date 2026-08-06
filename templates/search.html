@@ -3,43 +3,39 @@
 {% block title %}Search{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h2 class="fw-bold mb-1">Search result</h2>
-  <a href="{{url_for('menu')}}" class="btn btn-secondary btn-sm"><-- menus</a>
+<div class="section-heading mb-4">
+  <div>
+    <div class="decorative-line"></div>
+    <h2 class="mb-1">Search results</h2>
+    <p class="text-muted mb-0">Look for menu items by name or price.</p>
+  </div>
+  <a href="{{ url_for('menu') }}" class="btn btn-soft">Back to menu</a>
 </div>
+
 {% if query %}
-<div class="alert alert-info justify-content-between align-items-center">
-  <span>
-    <strong>{{query}}</strong>
-    <strong>{{ menuss|length  }} result {{ 's' if menus|length != 1 }}</strong>
-  </span>
-  <a href="{{url_for('search')}}" class="btn btn-secondary btn-sm">Clear</a>
+<div class="alert alert-info d-flex flex-column flex-md-row justify-content-between align-items-center rounded-4 shadow-sm py-3 px-4">
+  <div>
+    <strong>{{ query }}</strong> — {{ menus|length }} result{{ 's' if menus|length != 1 }} found
+  </div>
+  <a href="{{ url_for('search') }}" class="btn btn-outline-dark btn-sm mt-3 mt-md-0">Clear</a>
 </div>
 {% endif %}
+
 {% if menus %}
-<div class="card shadow-sm">
-  <div class="table-responsive">
-    <table class="table table-hover mb-0">
-      <thead class="table-secondary">
-        <tr>
-          <th>#</th>
-          <th>Item name</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in menus %}
-        <tr class="align-middle">
-          <td>{{ loop.index }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.price }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+<div class="row g-4 mt-3">
+  {% for item in menus %}
+  <div class="col-sm-6 col-xl-4">
+    <div class="card panel-card shadow-sm card-hover p-4 h-100">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">{{ item.name }}</h5>
+        <span class="badge bg-primary bg-opacity-10 text-primary">₹{{ item.price }}</span>
+      </div>
+      <p class="text-muted mb-0">Quick search result from the canteen menu.</p>
+    </div>
   </div>
+  {% endfor %}
 </div>
 {% else %}
-<p>No results found.</p>
+<div class="py-5 text-center text-muted">No results found. Try another search term.</div>
 {% endif %}
 {% endblock %}
