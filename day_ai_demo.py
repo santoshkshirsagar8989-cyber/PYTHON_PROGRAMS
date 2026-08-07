@@ -2,12 +2,13 @@ import os
 
 from groq import Groq
 
+import app
+
 client = Groq(api_key=(os.getenv("GROQ_API_KEY")))
 
-customer_name = "santosh"
-customer_order = "Vada"
-customer_quantity = 2
-customer_bill = 40
+customer_name = input("Enter customer name: ")
+customer_order = input("Enter customer order: ")
+customer_quantity = int(input("Enter customer quantity: "))
 
 #step 1: Create a prompt
 prompt = f"""
@@ -26,3 +27,4 @@ response = client.chat.completions.create(
 
 response_text = response.choices[0].message.content
 print(response_text)
+
